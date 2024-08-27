@@ -1,0 +1,48 @@
+# Python-related
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+*.sqlite
+
+# Virtual environment
+venv/
+ENV/
+env/
+*.egg-info/
+*.eggs/
+
+# Flask
+instance/
+.env
+
+# Configuration files
+*.log
+*.pid
+*.gz
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Docker-related
+docker-compose.override.yml
+*.dockerfile
+
+# Logs and PID files
+*.log
+*.pid

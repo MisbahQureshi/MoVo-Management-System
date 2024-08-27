@@ -36,7 +36,7 @@ def signup():
         password = form.password.data
 
         # Check if the username already exists
-        if Admin.get_admin_by_username(username):
+        if Admin.verify_admin(username, password):
             flash('Username already exists. Please choose a different one.', 'danger')
         else:
             # Create a new admin with the hashed password
