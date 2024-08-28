@@ -79,4 +79,8 @@ def init_db(mongo):
     mongo.db.volunteers.create_index('roll_number', unique=True)
     mongo.db.events.create_index('event_id', unique=True)
     
+<<<<<<< HEAD
     # Additional initialization can be done here
+=======
+    # Additional initialization can be done here
+>>>>>>> upstream/main
