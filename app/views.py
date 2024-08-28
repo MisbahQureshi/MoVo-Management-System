@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash  # Import this for hashing passwords
 from app.models import Admin, Volunteer, Event
 from app.forms import LoginForm, SignupForm, UploadForm, EventForm
 import os
@@ -36,7 +37,8 @@ def signup():
         password = form.password.data
 
         # Check if the username already exists
-        if Admin.verify_admin(username, password):
+        existing_admin = Admin.get_admin_by_username(username)
+        if existing_admin:
             flash('Username already exists. Please choose a different one.', 'danger')
         else:
             # Create a new admin with the hashed password
@@ -45,7 +47,6 @@ def signup():
             flash('Signup successful! Please log in.', 'success')
             return redirect(url_for('main.login'))
     return render_template('signup.html', form=form)
-
 
 @main_blueprint.route('/dashboard')
 def dashboard():
