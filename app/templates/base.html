@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volunteer Management System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
 </head>
 <body>
+    {% if request.endpoint not in ['main.login', 'main.signup'] %}
     <header>
         <nav>
             <ul>
@@ -19,7 +22,7 @@
                 {% endif %}
             </ul>
         </nav>
-    </header>
+    </header>{% endif %}
     <main>
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
@@ -33,8 +36,10 @@
         {% block content %}
         {% endblock %}
     </main>
+    {% if request.endpoint not in ['main.login', 'main.signup'] %}
     <footer>
         <p>&copy; 2024 Volunteer Management System</p>
     </footer>
+    {% endif %}
 </body>
 </html>
