@@ -31,9 +31,4 @@ def create_app(config_name='default'):
     # Register blueprints
     app.register_blueprint(main_blueprint)
     
-<<<<<<< HEAD
     return app
-=======
-    return app
-
->>>>>>> upstream/main
