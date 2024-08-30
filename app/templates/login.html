@@ -7,13 +7,11 @@
     <form method="POST">
         {{ form.hidden_tag() }}
         <div>
-            {{ form.username.label }}
-            {{ form.username(size=32) }}
-        </div>
-        <div>
-            {{ form.password.label }}
-            {{ form.password(size=32) }}
-        </div>
+        <input type="text" name="{{ form.username.name }}" id="{{ form.username.id }}" value="{{ form.username.data or '' }}" placeholder="Username" size="32" required>
+    </div>
+    <div>
+        <input type="password" name="{{ form.password.name }}" id="{{ form.password.id }}" value="{{ form.password.data or '' }}" placeholder="Password" size="32" required>
+    </div>
         <div>
             {{ form.submit() }}
         </div>
