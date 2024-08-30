@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign Up</h1>
+<div class="login-container">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+    <!-- <h1>MoVo Sign Up</h1> -->
     <form method="POST" action="{{ url_for('main.signup') }}">
         {{ form.hidden_tag() }}
         <div>
-            {{ form.username.label }}
-            {{ form.username(size=32) }}
+            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id }}" value="{{ form.username.data or '' }}" placeholder="Username" size="32" required>
         </div>
         <div>
-            {{ form.password.label }}
-            {{ form.password(size=32) }}
+            <input type="password" name="{{ form.password.name }}" id="{{ form.password.id }}" value="{{ form.password.data or '' }}" placeholder="Password" size="32" required>
         </div>
         <div>
-            {{ form.confirm_password.label }}
-            {{ form.confirm_password(size=32) }}
+            <input type="password" name="{{ form.confirm_password.name }}" id="{{ form.confirm_password.id }}" value="{{ form.confirm_password.data or '' }}" placeholder="Confirm Password" size="32" required>
         </div>
         <div>
             {{ form.submit() }}
         </div>
     </form>
     <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in here</a></p>
+</div>
 {% endblock %}
