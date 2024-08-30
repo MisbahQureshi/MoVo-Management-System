@@ -3,7 +3,7 @@
 {% block content %}
 <div class="login-container">
     <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-    <h1>Sign Up</h1>
+    <h1>MoVo Sign Up</h1>
     <form method="POST" action="{{ url_for('main.signup') }}">
         {{ form.hidden_tag() }}
         <div>
