@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.extensions import mongo
+from ..extensions import mongo
 from app.utils.auth import login_required
 
 admin_bp = Blueprint('admin', __name__)
