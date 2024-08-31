@@ -1,9 +1,10 @@
+# app/routes/admin.py
+
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
-from werkzeug.security import check_password_hash, generate_password_hash
-from ..extensions import mongo
+from app.utils.bcrypt_utils import generate_password_hash, check_password_hash
+from app.forms import LoginForm, SignupForm
 from app.utils.auth import login_required
-from app.forms import LoginForm
-from app.forms import SignupForm
+from app.extensions import mongo
 
 admin_bp = Blueprint('admin', __name__)
 

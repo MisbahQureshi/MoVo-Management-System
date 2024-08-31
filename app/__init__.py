@@ -10,8 +10,15 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    # Ensure MONGO_URI is correctly set in app config
+    app.config['MONGO_URI'] = Config.MONGO_URI
+
     # Initialize MongoDB with Flask app
     mongo.init_app(app)
+
+    # Print configuration to verify
+    print("MONGO_URI in app config:", app.config.get('MONGO_URI'))
+
 
     # Register blueprints for different modules
     app.register_blueprint(admin_bp, url_prefix='/admin')
