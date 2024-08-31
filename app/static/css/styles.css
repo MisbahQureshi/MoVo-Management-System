@@ -1,3 +1,4 @@
+/* Common styles for body */
 body {
     margin: 0;
     padding: 0;
@@ -11,6 +12,7 @@ body {
     height: 100vh;
 }
 
+/* Styles for login page */
 .login-container {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
@@ -19,16 +21,17 @@ body {
     width: 300px;
     text-align: center;
 }
-.login-container img{
+
+.login-container img {
     width: 90%;
 }
+
 .login-container h1 {
     font-size: 24px;
 }
 
 .login-container input[type="text"],
 .login-container input[type="password"] {
-    
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -60,6 +63,59 @@ body {
     text-decoration: underline;
 }
 
+/* Styles for signup page */
+.signup-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.signup-container img {
+    width: 90%;
+}
+
+.signup-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+}
+
+.signup-container input[type="submit"] {
+    background-color: #d71921;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.signup-container input[type="submit"]:hover {
+    background-color: #c7161e;
+}
+
+.signup-container a {
+    color: #d71921;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}
+
+/* Footer styles */
 footer {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.8);
