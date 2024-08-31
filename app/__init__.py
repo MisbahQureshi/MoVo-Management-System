@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 from .routes.admin import admin_bp
 from .routes.volunteer import volunteer_bp
 from .routes.event import event_bp
-from .config import Config
+import Config
 
 mongo = PyMongo()
 
