@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.utils import secure_filename
-from app.models import Admin, Volunteer, Event
+from app.models import Admin, Volunteer, Event, mongo, bcrypt
 from app.forms import LoginForm, SignupForm, UploadForm, EventForm
 import os
 import pandas as pd
@@ -36,16 +36,15 @@ def signup():
         password = form.password.data
 
         # Check if the username already exists
-        if Admin.verify_admin(username, password):
+        existing_admin = Admin.get_admin_by_username(username)
+        if existing_admin:
             flash('Username already exists. Please choose a different one.', 'danger')
         else:
-            # Create a new admin with the hashed password
-            hashed_password = generate_password_hash(password)
-            Admin.create_admin(username, hashed_password)
+            # Create a new admin
+            Admin.create_admin(username, password)
             flash('Signup successful! Please log in.', 'success')
             return redirect(url_for('main.login'))
     return render_template('signup.html', form=form)
-
 
 @main_blueprint.route('/dashboard')
 def dashboard():
@@ -71,7 +70,7 @@ def upload():
         if 'file' not in request.files:
             flash('No file part', 'danger')
             return redirect(request.url)
-        
+
         file = request.files['file']
         if file.filename == '':
             flash('No selected file', 'danger')
@@ -80,7 +79,7 @@ def upload():
         if file and file.filename.endswith('.csv'):
             filename = secure_filename(file.filename)
             file.save(os.path.join('/tmp', filename))
-            
+
             # Read the CSV file and process the data
             data = pd.read_csv(os.path.join('/tmp', filename))
             for _, row in data.iterrows():
@@ -94,19 +93,19 @@ def upload():
                     Volunteer.update_volunteer_hours(row['Roll Number'], row['Hours Volunteered'])
                 else:
                     Volunteer.add_volunteer(volunteer_data)
-            
+
             flash('File successfully uploaded and data saved to the database.', 'success')
             return redirect(url_for('main.dashboard'))
         else:
             flash('Invalid file type. Please upload a CSV file.', 'danger')
-    
+
     return render_template('upload.html', form=form)
 
-@main_blueprint.route('/add_event', methods=['POST'])
+@main_blueprint.route('/add_event', methods=['GET', 'POST'])
 def add_event():
     if 'admin' not in session:
         return redirect(url_for('main.login'))
-    
+
     form = EventForm()
     if form.validate_on_submit():
         event_data = {
@@ -118,5 +117,5 @@ def add_event():
         Event.add_event(event_data)
         flash('Event successfully added!', 'success')
         return redirect(url_for('main.dashboard'))
-    
+
     return render_template('add_event.html', form=form)
