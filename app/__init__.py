@@ -1,11 +1,10 @@
 from flask import Flask
-from flask_pymongo import PyMongo
+from .extensions import mongo
 from .routes.admin import admin_bp
 from .routes.volunteer import volunteer_bp
 from .routes.event import event_bp
-import Config
+from config import Config
 
-mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__)
