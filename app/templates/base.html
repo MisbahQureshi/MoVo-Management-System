@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volunteer Management System</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
 </head>
 <body>
-    {% if request.endpoint not in ['main.login', 'main.signup'] %}
+    {% if request.endpoint not in ['admin.login', 'admin.signup'] %}
     <header>
         <nav>
             <ul>
                 {% if 'admin' in session %}
-                    <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
-                    <li><a href="{{ url_for('main.upload') }}">Upload Volunteers</a></li>
-                    <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('admin.upload') }}">Upload Volunteers</a></li>
+                    <li><a href="{{ url_for('admin.logout') }}">Logout</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('main.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('admin.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('admin.signup') }}">Sign Up</a></li>
                 {% endif %}
             </ul>
         </nav>
-    </header>{% endif %}
+    </header>
+    {% endif %}
     <main>
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}

@@ -1,24 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="login-container">
+<div class="signup-container">
+    <!-- Logo Image -->
     <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-    <!-- <h1>MoVo Sign Up</h1> -->
-    <form method="POST" action="{{ url_for('main.signup') }}">
+
+    <!-- Signup Form -->
+    <form method="POST" action="{{ url_for('admin.signup') }}">
         {{ form.hidden_tag() }}
-        <div>
-            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id }}" value="{{ form.username.data or '' }}" placeholder="Username" size="32" required>
+
+        <div class="form-group">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-input", placeholder="Username") }}
         </div>
-        <div>
-            <input type="password" name="{{ form.password.name }}" id="{{ form.password.id }}" value="{{ form.password.data or '' }}" placeholder="Password" size="32" required>
+        <div class="form-group">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-input", placeholder="Password") }}
         </div>
-        <div>
-            <input type="password" name="{{ form.confirm_password.name }}" id="{{ form.confirm_password.id }}" value="{{ form.confirm_password.data or '' }}" placeholder="Confirm Password" size="32" required>
+        <div class="form-group">
+            {{ form.confirm_password.label(class="form-label") }}
+            {{ form.confirm_password(class="form-input", placeholder="Confirm Password") }}
         </div>
-        <div>
-            {{ form.submit() }}
+        <div class="form-group">
+            {{ form.submit(class="form-submit") }}
         </div>
     </form>
-    <p>Already have an account? <a href="{{ url_for('main.login') }}">Log in here</a></p>
+
+    <!-- Link to Login Page -->
+    <p>Already have an account? <a href="{{ url_for('admin.login') }}">Log in here</a></p>
 </div>
 {% endblock %}

@@ -2,42 +2,48 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from werkzeug.security import check_password_hash, generate_password_hash
 from ..extensions import mongo
 from app.utils.auth import login_required
+from app.forms import LoginForm
+from app.forms import SignupForm
 
 admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
-def admin_login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+def login():
+    form = LoginForm()  # Create instance of the form
+    if form.validate_on_submit():  # Use form's built-in validation
+        username = form.username.data
+        password = form.password.data
 
         # Find the admin user in the database
         admin = mongo.db.admins.find_one({'username': username})
-        
+
         # Verify the password
         if admin and check_password_hash(admin['password_hash'], password):
             session['admin_id'] = str(admin['_id'])
             return redirect(url_for('admin.dashboard'))
         flash('Invalid credentials')
         
-    return render_template('admin/login.html')
+    return render_template('admin/login.html', form=form)
 
 @admin_bp.route('/signup', methods=['GET', 'POST'])
-def admin_signup():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-
+def signup():
+    form = SignupForm()  # Create an instance of SignupForm
+    
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        confirm_password = form.confirm_password.data
+        
         # Basic validation
-        if not username or not password:
-            flash('Username and password are required.')
-            return redirect(url_for('admin.admin_signup'))
-
+        if password != confirm_password:
+            flash('Passwords do not match.')
+            return redirect(url_for('admin.signup'))
+        
         # Check if the username already exists
         existing_admin = mongo.db.admins.find_one({'username': username})
         if existing_admin:
             flash('Username already exists.')
-            return redirect(url_for('admin.admin_signup'))
+            return redirect(url_for('admin.signup'))
 
         # Save the new admin credentials securely
         mongo.db.admins.insert_one({
@@ -45,9 +51,9 @@ def admin_signup():
             'password_hash': generate_password_hash(password)
         })
         flash('Signup successful! Please log in.')
-        return redirect(url_for('admin.admin_login'))
-        
-    return render_template('admin/signup.html')
+        return redirect(url_for('admin.login'))
+    
+    return render_template('admin/signup.html', form=form)
 
 @admin_bp.route('/dashboard')
 @login_required
