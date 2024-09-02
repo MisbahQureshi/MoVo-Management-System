@@ -5,6 +5,7 @@ from app.utils.bcrypt_utils import generate_password_hash, check_password_hash
 from app.forms import LoginForm, SignupForm
 from app.utils.auth import login_required
 from app.extensions import mongo
+from bson import ObjectId
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -78,3 +79,41 @@ def event_management():
 def award_management():
     volunteers = mongo.db.volunteers.find({'volunteer_hours': {'$gte': 20}})
     return render_template('admin/award_management.html', volunteers=volunteers)
+
+@admin_bp.route('/edit_volunteer/<volunteer_id>', methods=['GET', 'POST'])
+@login_required
+def edit_volunteer(volunteer_id):
+    volunteer = mongo.db.volunteers.find_one({'_id': ObjectId(volunteer_id)})
+    
+    if request.method == 'POST':
+        # Get updated data from the form
+        updated_name = request.form.get('name')
+        updated_email = request.form.get('email')
+        updated_hours = request.form.get('volunteer_hours')
+        
+        # Update the volunteer in the database
+        mongo.db.volunteers.update_one(
+            {'_id': ObjectId(volunteer_id)},
+            {'$set': {
+                'name': updated_name,
+                'email': updated_email,
+                'volunteer_hours': int(updated_hours)
+            }}
+        )
+        
+        flash('Volunteer updated successfully!')
+        return redirect(url_for('admin.volunteer_management'))
+    
+    return render_template('admin/edit_volunteer.html', volunteer=volunteer)
+
+
+@admin_bp.route('/delete_volunteer/<volunteer_id>', methods=['POST'])
+@login_required
+def delete_volunteer(volunteer_id):
+    try:
+        mongo.db.volunteers.delete_one({'_id': ObjectId(volunteer_id)})
+        flash('Volunteer deleted successfully!')
+    except Exception as e:
+        flash(f'An error occurred while deleting the volunteer: {str(e)}')
+    
+    return redirect(url_for('admin.volunteer_management'))
