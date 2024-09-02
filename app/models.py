@@ -1,14 +1,14 @@
-import hmac
 from flask_pymongo import PyMongo
-from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
 
 mongo = PyMongo()
+bcrypt = Bcrypt()
 
 class Admin:
     @staticmethod
     def create_admin(username, password):
         """Create a new admin with a hashed password."""
-        hashed_password = generate_password_hash(password).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         mongo.db.admins.insert_one({
             'username': username,
             'password': hashed_password
@@ -18,7 +18,7 @@ class Admin:
     def verify_admin(username, password):
         """Verify an admin's username and password."""
         admin = mongo.db.admins.find_one({'username': username})
-        if admin and check_password_hash(admin['password'], password):
+        if admin and bcrypt.check_password_hash(admin['password'], password):
             return True
         return False
 
@@ -26,11 +26,6 @@ class Admin:
     def get_admin_by_username(username):
         """Retrieve an admin's data by username."""
         return mongo.db.admins.find_one({'username': username})
-
-    @staticmethod
-    def generate_password_hash(password):
-        """Generate a hashed password."""
-        return generate_password_hash(password).decode('utf-8')
 
 class Volunteer:
     @staticmethod

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Volunteer Management</h1>
+    <p>Manage and view the list of volunteers.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Volunteer Hours</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for volunteer in volunteers %}
+            <tr>
+                <td>{{ volunteer.name }}</td>
+                <td>{{ volunteer.email }}</td>
+                <td>{{ volunteer.phone }}</td>
+                <td>{{ volunteer.volunteer_hours }}</td>
+                <td>
+                    <a href="{{ url_for('admin.edit_volunteer', volunteer_id=volunteer._id) }}">Edit</a> |
+                    <form action="{{ url_for('admin.delete_volunteer', volunteer_id=volunteer._id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Award Management</h1>
+    <p>Manage and view awards for volunteers.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Volunteer Name</th>
+                <th>Volunteer Hours</th>
+                <th>Award Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for volunteer in volunteers %}
+            <tr>
+                <td>{{ volunteer.name }}</td>
+                <td>{{ volunteer.volunteer_hours }}</td>
+                <td>{% if volunteer.volunteer_hours >= 50 %} Gold {% elif volunteer.volunteer_hours >= 30 %} Silver {% else %} Bronze {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
