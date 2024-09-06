@@ -1,48 +1,43 @@
-<!-- app/templates/admin/dashboard.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Admin Dashboard</h1>
-    
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Manage Volunteers</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">View, add, edit, or remove volunteers.</p>
-                    <a href="{{ url_for('admin.volunteer_management') }}" class="btn btn-primary">Manage Volunteers</a>
-                </div>
+<div class="container">
+    <div class="topNav">
+        <h1>Admin Dashboard</h1>
+        <a href="{{ url_for('admin.login') }}" class="btnL">Logout</a>
+    </div>  
+    <div class="card-container">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Manage Volunteers</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">View, add, edit, or remove volunteers.</p>
+                <a href="{{ url_for('admin.volunteer_management') }}" class="btn">Manage Volunteers</a>
             </div>
         </div>
         
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Manage Events</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">View, create, or edit events.</p>
-                    <a href="{{ url_for('admin.event_management') }}" class="btn btn-primary">Manage Events</a>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Manage Events</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">View, create, or edit events.</p>
+                <a href="{{ url_for('admin.event_management') }}" class="btn">Manage Events</a>
             </div>
         </div>
         
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Manage Awards</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Award recognition to volunteers based on their contributions.</p>
-                    <a href="{{ url_for('admin.award_management') }}" class="btn btn-primary">Manage Awards</a>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Manage Awards</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Award recognition to volunteers based on their contributions.</p>
+                <a href="{{ url_for('admin.award_management') }}" class="btn">Manage Awards</a>
             </div>
         </div>
+
+        
     </div>
-    
-    <!-- Additional sections can be added here -->
 </div>
 {% endblock %}

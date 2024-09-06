@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    {% if request.endpoint not in ['admin.login', 'admin.signup'] %}
+    {% if request.endpoint not in ['admin.login', 'admin.signup', 'admin.dashboard'] %}
     <header>
         <nav>
             <ul>

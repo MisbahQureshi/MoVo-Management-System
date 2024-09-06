@@ -4,16 +4,21 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     color: #3B3B3B;
+    
+}
+
+/* Styles for login page and signUp page*/
+.auth-page{
     background: url('/static/images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
     height: 100vh;
 }
 
-/* Styles for login page */
-.login-container {
+.login-container,
+.signup-container  {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
@@ -22,11 +27,13 @@ body {
     text-align: center;
 }
 
-.login-container img {
+.login-container img,
+.signup-container img  {
     width: 90%;
 }
 
-.login-container h1 {
+.login-container h1,
+.signup-container h1 {
     font-size: 24px;
 }
 
@@ -39,58 +46,7 @@ body {
     width: 90%;
 }
 
-.login-container input[type="submit"] {
-    background-color: #d71921;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.login-container input[type="submit"]:hover {
-    background-color: #c7161e;
-}
-
-.login-container a {
-    color: #d71921;
-    text-decoration: none;
-    font-size: 12px;
-}
-
-.login-container a:hover {
-    text-decoration: underline;
-}
-
-/* Styles for signup page */
-.signup-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
-}
-
-.signup-container img {
-    width: 90%;
-}
-
-.signup-container h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.signup-container input[type="text"],
-.signup-container input[type="password"] {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 90%;
-}
-
+.login-container input[type="submit"],
 .signup-container input[type="submit"] {
     background-color: #d71921;
     color: #fff;
@@ -101,19 +57,34 @@ body {
     width: 100%;
 }
 
+.login-container input[type="submit"]:hover,
 .signup-container input[type="submit"]:hover {
     background-color: #c7161e;
 }
 
+.login-container a,
 .signup-container a {
     color: #d71921;
     text-decoration: none;
     font-size: 12px;
 }
 
+.login-container a:hover,
 .signup-container a:hover {
     text-decoration: underline;
 }
+
+/* Styles for signup page */
+
+.signup-container input[type="text"],
+.signup-container input[type="password"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 90%;
+}
+
 
 /* Footer styles */
 footer {
@@ -124,3 +95,95 @@ footer {
     bottom: 0;
     left: 0;
 }
+
+/* dashboard */
+.container{
+    margin: 10px;
+    padding: 0 40px;
+}
+
+.topNav{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnL {
+    display: inline-block;
+    background-color: #d71921;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    height: 20px;
+}
+
+.btnL:hover {
+    background-color: #c7161e;
+}
+
+.card-container {
+    display: flex;
+    align-items: stretch;
+    gap: 20px; 
+    flex-wrap: wrap; 
+    margin-bottom: 20px;
+    
+}
+
+.card {
+    background-color: white;
+    border:#ddd solid 1px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+
+.card:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+}
+
+.card-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.card-body {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.card-text {
+    margin-bottom: 15px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #d71921;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #c7161e;
+}
+
