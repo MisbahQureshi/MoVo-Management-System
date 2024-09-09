@@ -1,18 +1,19 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Edit Volunteer</h1>
-<form method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{ volunteer.name }}" required><br>
+<div class="edit-container">
+    <h1>Edit Volunteer</h1>
+    <form method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ volunteer.name }}" required><br>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ volunteer.email }}" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ volunteer.email }}" required><br>
 
-    <label for="volunteer_hours">Volunteer Hours:</label>
-    <input type="number" id="volunteer_hours" name="volunteer_hours" value="{{ volunteer.volunteer_hours }}" required><br>
+        <label for="volunteer_hours">Volunteer Hours:</label>
+        <input type="number" id="volunteer_hours" name="volunteer_hours" value="{{ volunteer.volunteer_hours }}" required><br>
 
-    <input type="submit" value="Save">
-</form>
-<a href="{{ url_for('admin.volunteer_management') }}">Back to Volunteer Management</a>
+        <input type="submit" value="Save">
+    </form>
+    <a href="{{ url_for('admin.volunteer_management') }}" class="back-link">Back to Volunteer Management</a>
+</div>
 {% endblock %}

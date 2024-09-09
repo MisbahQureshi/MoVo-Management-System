@@ -4,21 +4,21 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     color: #3B3B3B;
-    
+
 }
 
 /* Styles for login page and signUp page*/
-.auth-page{
+.auth-page {
     background: url('/static/images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
     height: 100vh;
 }
 
 .login-container,
-.signup-container  {
+.signup-container {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
@@ -28,7 +28,7 @@ body {
 }
 
 .login-container img,
-.signup-container img  {
+.signup-container img {
     width: 90%;
 }
 
@@ -136,7 +136,7 @@ footer {
     gap: 20px;
     flex-wrap: wrap;
     position: relative;
-    top: -100px; 
+    top: -100px;
     margin-bottom: 20px;
     z-index: 5;
     padding: 20px;
@@ -200,7 +200,7 @@ footer {
 @media (max-width: 768px) {
     .card-container {
         flex-direction: column;
-        top: -50px; 
+        top: -50px;
     }
 
     .card {
@@ -208,7 +208,7 @@ footer {
     }
 }
 
-/* manage volunteers */
+/* manage volunteers events and awards */
 .admin-container {
     margin: 20px;
     padding: 20px;
@@ -294,7 +294,12 @@ button:hover {
         padding: 15px;
     }
 
-    table, thead, tbody, th, td, tr {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
         display: block;
     }
 
@@ -319,4 +324,156 @@ button:hover {
         text-transform: uppercase;
         flex: 1;
     }
+}
+
+/* add volunteers */
+
+.addVolunteers {
+    text-align: right;
+    margin: 20px;
+}
+.addVolunteers button{
+    margin-left: 10px;
+}
+
+/* Edit Volunteer Page Styles */
+.edit-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.edit-container h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 20px;
+}
+
+.edit-container label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.edit-container input[type="text"],
+.edit-container input[type="email"],
+.edit-container input[type="number"] {
+    width: 30%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.edit-container input[type="submit"] {
+    background-color: #d71921;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-container input[type="submit"]:hover {
+    background-color: #c7161e;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #d71921;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto; 
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%; 
+    max-width: 600px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+.modal-content h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 20px;
+}
+
+.modal-content label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="number"],
+.modal-content input[type="file"] {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modal-content input[type="submit"] {
+    background-color: #d71921;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content input[type="submit"]:hover {
+    background-color: #c7161e;
+}
+
+.close {
+    color: #aaa;
+    position: absolute; 
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
 }

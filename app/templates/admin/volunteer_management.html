@@ -4,6 +4,10 @@
 <div class="admin-container">
     <h1>Volunteer Management</h1>
     <p>Manage and view the list of volunteers.</p>
+    <div class="addVolunteers">
+        <button type="button" id="openModal">Add New Volunteer</button>
+        <button type="button" id="openImportModal">Import Document</button>
+    </div>
     <table>
         <thead>
             <tr>
@@ -32,4 +36,77 @@
         </tbody>
     </table>
 </div>
+
+<!-- Modal for Adding Volunteer -->
+<div id="addVolunteerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h1>Add New Volunteer</h1>
+        <form method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required><br>
+
+            <label for="volunteer_hours">Volunteer Hours:</label>
+            <input type="number" id="volunteer_hours" name="volunteer_hours" required><br>
+
+            <input type="submit" value="Add Volunteer">
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Importing Document -->
+<div id="importModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeImportModal">&times;</span>
+        <h1>Import Document</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="file">Choose File:</label>
+            <input type="file" id="file" name="file" accept=".xlsx, .xls" required><br>
+            <input type="submit" value="Upload File">
+        </form>
+    </div>
+</div>
+
+<script>
+    var addVolunteerModal = document.getElementById("addVolunteerModal");
+    var importModal = document.getElementById("importModal");
+
+    var openAddModalBtn = document.getElementById("openModal");
+    var openImportModalBtn = document.getElementById("openImportModal");
+
+    var closeAddModal = document.getElementById("closeAddModal");
+    var closeImportModal = document.getElementById("closeImportModal");
+
+    openAddModalBtn.onclick = function() {
+        addVolunteerModal.style.display = "block";
+    }
+
+    openImportModalBtn.onclick = function() {
+        importModal.style.display = "block";
+    }
+
+    closeAddModal.onclick = function() {
+        addVolunteerModal.style.display = "none";
+    }
+
+    closeImportModal.onclick = function() {
+        importModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == addVolunteerModal) {
+            addVolunteerModal.style.display = "none";
+        }
+        if (event.target == importModal) {
+            importModal.style.display = "none";
+        }
+    }
+</script>
+
 {% endblock %}
