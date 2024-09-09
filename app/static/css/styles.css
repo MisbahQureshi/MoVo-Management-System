@@ -91,20 +91,20 @@ footer {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.8);
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: sticky;
 }
 
 /* dashboard */
-.container{
+.container {
     margin: 10px;
     padding: 0 40px;
 }
 
-.topNav{
+.topNav {
     display: flex;
     justify-content: space-between;
+    z-index: 10;
+    position: relative;
 }
 
 .btnL {
@@ -113,6 +113,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px;
+    margin: 20px;
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
@@ -123,30 +124,39 @@ footer {
     background-color: #c7161e;
 }
 
+.dashboardImg {
+    width: 100%;
+    height: auto;
+}
+
+/* Adjust card positioning */
 .card-container {
     display: flex;
     align-items: stretch;
-    gap: 20px; 
-    flex-wrap: wrap; 
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    top: -100px; 
     margin-bottom: 20px;
-    
+    z-index: 5;
+    padding: 20px;
 }
 
 .card {
     background-color: white;
-    border:#ddd solid 1px;
+    border: #ddd solid 1px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     width: 23%;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    transition: transform 0.3s ease, box-shadow 0.5s ease;
+    z-index: 10;
 }
 
-
 .card:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-header {
@@ -187,3 +197,126 @@ footer {
     background-color: #c7161e;
 }
 
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        top: -50px; 
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+
+/* manage volunteers */
+.admin-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 10px;
+}
+
+.admin-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+thead th {
+    background-color: #d71921;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-size: 18px;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons and actions */
+a {
+    color: #d71921;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #d71921;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c7161e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 15px;
+    }
+
+    tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 5px;
+        font-size: 14px;
+    }
+
+    tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        flex: 1;
+    }
+}
