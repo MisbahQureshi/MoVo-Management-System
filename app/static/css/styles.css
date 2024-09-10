@@ -477,3 +477,109 @@ button:hover {
     color: black;
     text-decoration: none;
 }
+
+/* edit event */
+.editEvent-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.editEvent-container h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 20px;
+}
+
+.editEvent-container label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.editEvent-container input[type="text"],
+.editEvent-container input[type="date"],
+.editEvent-container textarea {
+    width: 30%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.editEvent-container input[type="submit"] {
+    background-color: #d71921;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.editEvent-container input[type="submit"]:hover {
+    background-color: #c7161e;
+}
+/* add events */
+.addEvents {
+    text-align: right;
+    margin: 20px;
+}
+
+/* event modal */
+.modalEvent-content {
+    background-color: #fff;
+    margin: auto; 
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%; 
+    max-width: 600px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+.modalEvent-content h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 20px;
+}
+
+.modalEvent-content label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.modalEvent-content input[type="text"],
+.modalEvent-content input[type="date"],
+.modalEvent-content textarea{
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modalEvent-content input[type="submit"] {
+    background-color: #d71921;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modalEvent-content input[type="submit"]:hover {
+    background-color: #c7161e;
+}

@@ -4,6 +4,9 @@
 <div class="admin-container">
     <h1>Event Management</h1>
     <p>Manage and view events.</p>
+    <div class="addEvents">
+        <button type="button" id="openModal">Add New Event</button>
+    </div>
     <table>
         <thead>
             <tr>
@@ -22,8 +25,10 @@
                 <td>
                     <a href="{{ url_for('admin.edit_event', event_id=event._id) }}">Edit</a> |
                     <!-- Changed to POST method using form to handle deletion -->
-                    <form action="{{ url_for('admin.delete_event', event_id=event._id) }}" method="POST" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
+                    <form action="{{ url_for('admin.delete_event', event_id=event._id) }}" method="POST"
+                        style="display:inline;">
+                        <button type="submit"
+                            onclick="return confirm('Are you sure you want to delete this event?');">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -31,4 +36,49 @@
         </tbody>
     </table>
 </div>
+
+<!-- Modal for Adding Event -->
+<div id="addEventModal" class="modal">
+    <div class="modalEvent-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h1>Add New Event</h1>
+        <form method="POST">
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <input type="submit" value="Add Event">
+        </form>
+    </div>
+</div>
+
+<script>
+    var addEventModal = document.getElementById("addEventModal");
+
+    var openAddModalBtn = document.getElementById("openModal");
+
+    var closeAddModal = document.getElementById("closeAddModal");
+
+    openAddModalBtn.onclick = function() {
+        addEventModal.style.display = "block";
+    }
+
+    closeAddModal.onclick = function() {
+        addEventModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == addEventModal) {
+            addEventModal.style.display = "none";
+        }
+        if (event.target == importModal) {
+            importModal.style.display = "none";
+        }
+    }
+</script>
+
 {% endblock %}
