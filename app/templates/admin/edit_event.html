@@ -1,0 +1,20 @@
+<!-- app/templates/admin/edit_event.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Edit Event</h1>
+    <form action="{{ url_for('admin.edit_event', event_id=event._id) }}" method="POST">
+        <label for="name">Event Name:</label>
+        <input type="text" id="name" name="name" value="{{ event.name }}" required>
+        
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="{{ event.date }}" required>
+        
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{{ event.description }}</textarea>
+        
+        <button type="submit">Update Event</button>
+    </form>
+</div>
+{% endblock %}
