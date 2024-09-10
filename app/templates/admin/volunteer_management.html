@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="admin-container">
-    <h1>Volunteer Management</h1>
+    <div class="heading">
+        <h1>Volunteer Management</h1>
+        <a href="{{ url_for('admin.dashboard') }}" class="back-link" style="margin: auto 0;">Back to Dashboard</a>
+    </div>
+    
     <p>Manage and view the list of volunteers.</p>
     <div class="addVolunteers">
         <button type="button" id="openModal">Add New Volunteer</button>

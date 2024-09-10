@@ -586,3 +586,8 @@ button:hover {
 .modalEvent-content input[type="submit"]:hover {
     background-color: #c7161e;
 }
+
+.heading{
+    display: flex;
+    justify-content: space-between;
+}
