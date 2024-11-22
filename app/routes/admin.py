@@ -7,6 +7,7 @@ from app.utils.auth import login_required
 from app.extensions import mongo
 from bson import ObjectId
 from datetime import datetime
+from app.utils.excel_utils import ExcelHandler  # Importing the ExcelHandler to handle export and import
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -151,6 +152,7 @@ def edit_event(event_id):
     
     return render_template('admin/edit_event.html', event=event)
 
+# Delete event route
 @admin_bp.route('/delete_event/<event_id>', methods=['POST'])
 @login_required
 def delete_event(event_id):
@@ -161,3 +163,47 @@ def delete_event(event_id):
         flash(f'An error occurred while deleting the event: {str(e)}')
     
     return redirect(url_for('admin.event_management'))
+
+# Route to manage Excel data (export/import)
+@admin_bp.route('/excel', methods=['GET', 'POST'])
+@login_required
+def excel_management():
+    if request.method == 'POST':
+        # Handle Excel import
+        collection_name = request.form.get('collection_name')
+        if collection_name:
+            ExcelHandler.import_from_excel(collection_name)
+    return render_template('admin/excel_management.html')  # The page where you'll manage the Excel data
+
+# Export Excel route
+@admin_bp.route('/export_excel', methods=['GET'])
+@login_required
+def export_excel():
+    collections = request.args.getlist('collections')
+    sheet_names = request.args.getlist('sheet_names')  # Optional: Use custom sheet names
+    
+    if not collections:
+        flash("No collections selected!")
+        return redirect(url_for('admin.excel_management'))
+    
+    # Call ExcelHandler to export the data
+    return ExcelHandler.export_to_excel(collections, sheet_names)
+
+# Import Excel route
+@admin_bp.route('/import_excel', methods=['POST'])
+@login_required
+def import_excel():
+    collection_name = request.form.get('collection_name')
+    
+    if not collection_name:
+        flash("No collection selected for import!")
+        return redirect(url_for('admin.excel_management'))
+    
+    # Call ExcelHandler to import the data
+    result = ExcelHandler.import_from_excel(collection_name)
+    if result:
+        flash("Data imported successfully!")
+    else:
+        flash("Data import failed.")
+    
+    return redirect(url_for('admin.excel_management'))

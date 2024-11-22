@@ -12,26 +12,55 @@
         <button type="button" id="openModal">Add New Volunteer</button>
         <button type="button" id="openImportModal">Import Document</button>
     </div>
-    <table>
+
+    <table style="font-size: 12px; width: 100%; border-collapse: collapse;">
         <thead>
             <tr>
+                <th>Student ID</th>
                 <th>Volunteer Name</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Volunteer Hours</th>
+                <th>Status</th>
+                <th>Event IDs</th>
+                <th>Award ID</th>
+                <th>Schedule</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for volunteer in volunteers %}
             <tr>
+                <td>{{ volunteer.student_id if volunteer.student_id else 'Not available' }}</td>
                 <td>{{ volunteer.name }}</td>
                 <td>{{ volunteer.email }}</td>
-                <td>{{ volunteer.phone }}</td>
+                <td>{{ volunteer.phone if volunteer.phone else 'Not available' }}</td>
                 <td>{{ volunteer.volunteer_hours }}</td>
+                <td>{{ volunteer.status }}</td>
                 <td>
-                    <a href="{{ url_for('admin.edit_volunteer', volunteer_id=volunteer._id) }}">Edit</a> |
-                    <form action="{{ url_for('admin.delete_volunteer', volunteer_id=volunteer._id) }}" method="POST" style="display:inline;">
+                    {% if volunteer.event_id %}
+                        {{ volunteer.event_id | join(", ") }}
+                    {% else %}
+                        No events
+                    {% endif %}
+                </td>
+                <td>
+                    {% if volunteer.awards_id %}
+                        {{ volunteer.awards_id | join(", ") }}
+                    {% else %}
+                        No awards
+                    {% endif %}
+                </td>
+                <td>
+                    <ul>
+                        {% for schedule in volunteer.schedule %}
+                            <li>Event ID: {{ schedule.event_id }} | Start: {{ schedule.start_date }} | End: {{ schedule.end_date }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin.edit_volunteer', volunteer_id=volunteer['_id']) }}">Edit</a> |
+                    <form action="{{ url_for('admin.delete_volunteer', volunteer_id=volunteer['_id']) }}" method="POST" style="display:inline;">
                         <button type="submit">Delete</button>
                     </form>
                 </td>
@@ -53,14 +82,29 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required><br>
 
-            <label for="700">700#:</label>
-            <input type="text" id="700" name="700" required><br>
-
             <label for="phone">Phone:</label>
             <input type="text" id="phone" name="phone" required><br>
 
             <label for="volunteer_hours">Volunteer Hours:</label>
             <input type="number" id="volunteer_hours" name="volunteer_hours" required><br>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select><br>
+
+            <label for="student_id">Student ID:</label>
+            <input type="text" id="student_id" name="student_id"><br>
+
+            <label for="award_id">Award ID:</label>
+            <input type="text" id="award_id" name="award_id"><br>
+
+            <label for="event_id">Event IDs:</label>
+            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br>
+
+            <label for="schedule">Schedule (Event ID, Start Date, End Date):</label>
+            <textarea id="schedule" name="schedule" placeholder="Example: Evn001, 2024-11-01, 2024-11-20"></textarea><br>
 
             <input type="submit" value="Add Volunteer">
         </form>
