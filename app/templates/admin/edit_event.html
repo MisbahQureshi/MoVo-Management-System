@@ -1,19 +1,32 @@
-<!-- app/templates/admin/edit_event.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="editEvent-container">
     <h1>Edit Event</h1>
-    <form action="{{ url_for('admin.edit_event', event_id=event._id) }}" method="POST">
+    <form action="{{ url_for('admin.edit_event', event_id=event.id) }}" method="POST">
         <label for="name">Event Name:</label>
-        <input type="text" id="name" name="name" value="{{ event.name }}" required>
-        
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" value="{{ event.date }}" required>
-        
+        <input type="text" id="name" name="name" value="{{ event.name }}" required><br>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ event.start_date }}" required><br>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ event.end_date }}" required><br>
+
         <label for="description">Description:</label>
-        <textarea id="description" name="description" required>{{ event.description }}</textarea>
-        <div><button type="submit">Update Event</button></div>
+        <textarea id="description" name="description" required>{{ event.description }}</textarea><br>
+
+        <label for="volunteers">Select Volunteers:</label>
+        <select id="volunteers" name="volunteers" multiple>
+            {% for volunteer in volunteers %}
+                <option value="{{ volunteer.volunteer_id }}" 
+                    {% if volunteer.volunteer_id in event.volunteers %} selected {% endif %}>
+                    {{ volunteer.first_name }} {{ volunteer.last_name }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Update Event</button>
     </form>
 </div>
 {% endblock %}

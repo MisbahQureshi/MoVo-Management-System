@@ -39,6 +39,28 @@
                 <a href="{{ url_for('admin.award_management') }}" class="btn">Manage Awards</a>
             </div>
         </div>
+
+        <!-- New Card for Task Management -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Manage Tasks</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">View, create, edit, or remove tasks.</p>
+                <a href="{{ url_for('task.task_management') }}" class="btn">Manage Tasks</a>
+            </div>
+        </div>
+
+        <!-- Excel Card -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Manage Excel Data</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Export and Import data for Volunteers, Events, and Tasks.</p>
+                <a href="{{ url_for('admin.excel_management') }}" class="btn">Manage Excel Data</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

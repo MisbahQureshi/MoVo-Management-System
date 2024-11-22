@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="heading">
+        <h1>Task Management</h1>
+        <a href="{{ url_for('admin.dashboard') }}" class="back-link" style="margin: auto 0;">Back to Dashboard</a>
+    </div>
+    
+    <p>Manage and view tasks.</p>
+
+    <!-- Task Creation Form -->
+    <div class="task-form">
+        <h3>Create Task</h3>
+        <form action="{{ url_for('task.task_management') }}" method="POST">
+            <label for="task_name">Task Name:</label>
+            <input type="text" id="task_name" name="task_name" required><br>
+            
+            <label for="task_description">Task Description:</label>
+            <input type="text" id="task_description" name="task_description"><br>
+            
+            <label for="task_date">Task Date:</label>
+            <input type="date" id="task_date" name="task_date" required><br>
+            
+            <label for="task_event_id">Event ID:</label>
+            <input type="text" id="task_event_id" name="task_event_id"><br>
+            
+            <label for="task_volunteer_ids">Assign Volunteers (comma-separated):</label>
+            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br>
+            
+            <input type="submit" value="Create Task">
+        </form>
+    </div>
+
+    <!-- Task Table -->
+    <table style="font-size: 12px; width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Assigned Volunteers</th>
+                <th>Event ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.date }}</td>
+                <td>{{ task.volunteer_ids | join(", ") }}</td>
+                <td>{{ task.event_id }}</td>
+                <td>
+                    <a href="{{ url_for('task.task_management', action='edit', task_id=task._id) }}">Edit</a> |
+                    <a href="{{ url_for('task.task_management', action='delete', task_id=task._id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

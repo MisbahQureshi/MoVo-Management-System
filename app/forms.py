@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField
+from wtforms import StringField, PasswordField, SubmitField, FileField, SelectMultipleField  # Add SelectMultipleField here
 from wtforms.validators import DataRequired, Length
 
 class LoginForm(FlaskForm):
@@ -12,10 +12,10 @@ class UploadForm(FlaskForm):
     submit = SubmitField('Upload')
 
 class EventForm(FlaskForm):
-    event_id = StringField('Event ID', validators=[DataRequired(), Length(max=50)])
     event_name = StringField('Event Name', validators=[DataRequired(), Length(max=100)])
     date = StringField('Date', validators=[DataRequired(), Length(max=10)])
     description = StringField('Description', validators=[Length(max=500)])
+    volunteer_id = SelectMultipleField('Select Volunteers', coerce=str)  # For multiple volunteer selection
     submit = SubmitField('Add Event')
 
 class SignupForm(FlaskForm):

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="heading">
+        <h1>Excel Data Management</h1>
+        <a href="{{ url_for('admin.dashboard') }}" class="back-link" style="margin: auto 0;">Back to Dashboard</a>
+    </div>
+    
+    <div class="card-container">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Export Data</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('admin.export_excel') }}" method="GET">
+                    <label for="collections">Select Collections to Export:</label><br>
+                    <select name="collections" id="collections" multiple>
+                        <option value="volunteers">Volunteers</option>
+                        <option value="events">Events</option>
+                        <option value="tasks">Tasks</option>
+                    </select><br><br>
+                    <input type="submit" value="Export">
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Import Data</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('admin.import_excel') }}" method="POST" enctype="multipart/form-data">
+                    <label for="file">Choose File to Import:</label><br>
+                    <input type="file" name="file" id="file" accept=".xlsx, .xls" required><br><br>
+                    <label for="collection_name">Select Collection to Import Data:</label><br>
+                    <select name="collection_name" id="collection_name">
+                        <option value="volunteers">Volunteers</option>
+                        <option value="events">Events</option>
+                        <option value="tasks">Tasks</option>
+                    </select><br><br>
+                    <input type="submit" value="Import">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
