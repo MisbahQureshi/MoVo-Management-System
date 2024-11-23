@@ -8,28 +8,8 @@
     </div>
     
     <p>Manage and view tasks.</p>
-
-    <!-- Task Creation Form -->
-    <div class="task-form">
-        <h3>Create Task</h3>
-        <form action="{{ url_for('task.task_management') }}" method="POST">
-            <label for="task_name">Task Name:</label>
-            <input type="text" id="task_name" name="task_name" required><br>
-            
-            <label for="task_description">Task Description:</label>
-            <input type="text" id="task_description" name="task_description"><br>
-            
-            <label for="task_date">Task Date:</label>
-            <input type="date" id="task_date" name="task_date" required><br>
-            
-            <label for="task_event_id">Event ID:</label>
-            <input type="text" id="task_event_id" name="task_event_id"><br>
-            
-            <label for="task_volunteer_ids">Assign Volunteers (comma-separated):</label>
-            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br>
-            
-            <input type="submit" value="Create Task">
-        </form>
+    <div class="addTask">
+        <button type="button" id="openModal">Create Task</button>
     </div>
 
     <!-- Task Table -->
@@ -61,5 +41,54 @@
         </tbody>
     </table>
 </div>
+
+<!-- Modal for Adding Event -->
+<div id="addTaskModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h1>Create Task</h1>
+        <form action="{{ url_for('task.task_management') }}" method="POST">
+            <label for="task_name">Task Name:</label>
+            <input type="text" id="task_name" name="task_name" required><br>
+            
+            <label for="task_description">Task Description:</label>
+            <input type="text" id="task_description" name="task_description"><br>
+            
+            <label for="task_date">Task Date:</label>
+            <input type="date" id="task_date" name="task_date" required><br>
+            
+            <label for="task_event_id">Event ID:</label>
+            <input type="text" id="task_event_id" name="task_event_id"><br>
+            
+            <label for="task_volunteer_ids">Assign Volunteers (comma-separated):</label>
+            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br>
+            
+            <input type="submit" value="Create Task">
+        </form>
+    </div>
+</div>
+
+<script>
+    var addTaskModal = document.getElementById("addTaskModal");
+
+    var openAddModalBtn = document.getElementById("openModal");
+
+    var closeAddModal = document.getElementById("closeAddModal");
+
+    openAddModalBtn.onclick = function() {
+        addTaskModal.style.display = "block";
+    }
+
+    closeAddModal.onclick = function() {
+        addTaskModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == addTaskModal) {
+            addTaskModal.style.display = "none";
+        }
+    }
+</script>
+
 
 {% endblock %}

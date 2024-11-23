@@ -95,6 +95,7 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 1000;
 }
 
 /* dashboard */
@@ -245,13 +246,13 @@ thead th {
     color: white;
     text-align: left;
     padding: 10px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 tbody td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    font-size: 12px;
     color: #333;
 }
 
@@ -307,7 +308,7 @@ button:hover {
     }
 
     thead {
-        display: none;
+        display: block;
     }
 
     tbody tr {
@@ -315,7 +316,7 @@ button:hover {
     }
 
     tbody td {
-        display: flex;
+        display: bolck;
         justify-content: space-between;
         padding: 10px 5px;
         font-size: 14px;
@@ -324,6 +325,7 @@ button:hover {
     tbody td:before {
         content: attr(data-label);
         font-weight: bold;
+        font-size: 12px;
         text-transform: uppercase;
         flex: 1;
     }
@@ -417,12 +419,15 @@ button:hover {
     margin: auto; 
     padding: 20px;
     border-radius: 8px;
-    width: 80%; 
+    width: 60%; 
     max-width: 600px;
+    max-width: 500px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    position: relative; 
+    position: relative;
     top: 50%; 
     transform: translateY(-50%);
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .modal-content h1 {
@@ -433,7 +438,7 @@ button:hover {
 
 .modal-content label {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     margin-bottom: 5px;
 }
@@ -441,13 +446,14 @@ button:hover {
 .modal-content input[type="text"],
 .modal-content input[type="email"],
 .modal-content input[type="number"],
+.modal-content input[type="date"],
 .modal-content input[type="file"] {
     width: 95%;
     padding: 8px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .modal-content input[type="submit"] {
@@ -457,7 +463,7 @@ button:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     transition: background-color 0.3s ease;
 }
 
@@ -479,6 +485,114 @@ button:hover {
 .close:focus {
     color: black;
     text-decoration: none;
+}
+
+/* Styling the scrollbar */
+.modal-content::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+    background: transparent; /* Make the background transparent */
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent; /* Hide the track */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #d71921; /* Red thumb */
+    border-radius: 50px; /* Make the thumb round */
+    border: 6px solid transparent; /* Border around the thumb for contrast */
+}
+
+/* Hover effect for the scrollbar thumb */
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: #c7161e; /* Darker red when hovering */
+}
+
+
+/* modal for volunteers */
+.add-volunteer-modal .modal-content h1 {
+    font-size: 32px;
+    color: #d71921;
+    margin-bottom: 20px;
+}
+
+.add-volunteer-modal .modal-content label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.add-volunteer-modal .modal-content input[type="text"],
+.add-volunteer-modal .modal-content input[type="email"],
+.add-volunteer-modal .modal-content input[type="number"],
+.add-volunteer-modal .modal-content select,
+.add-volunteer-modal .modal-content textarea {
+    width: 95%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Adjust for specific fields (Phone, Volunteer Hours, Status, Student ID) */
+.add-volunteer-modal .input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.add-volunteer-modal .input-inline {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Styling for Schedule textarea */
+.add-volunteer-modal .modal-content textarea {
+    height: 100px; 
+}
+
+/* Adjust button and general form alignment */
+.add-volunteer-modal .modal-content input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #d71921;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-volunteer-modal .modal-content input[type="submit"]:hover {
+    background-color: #c7161e;
+}
+
+/* Make modal responsive */
+@media (max-width: 768px) {
+    .add-volunteer-modal .input-inline {
+        flex: 1 1 100%; 
+    }
+
+    .add-volunteer-modal .modal-content h1 {
+        font-size: 24px;
+    }
+
+    .add-volunteer-modal .modal-content input[type="submit"] {
+        font-size: 12px;
+    }
+
+    .add-volunteer-modal .modal-content label {
+        font-size: 12px;
+    }
+
+    .add-volunteer-modal .modal-content input[type="text"],
+    .add-volunteer-modal .modal-content input[type="email"],
+    .add-volunteer-modal .modal-content input[type="number"],
+    .add-volunteer-modal .modal-content select,
+    .add-volunteer-modal .modal-content textarea {
+        font-size: 12px;
+    }
 }
 
 /* edit event */
@@ -590,4 +704,51 @@ button:hover {
 .heading{
     display: flex;
     justify-content: space-between;
+}
+
+/* task */
+.addTask {
+    text-align: right;
+    margin: 20px;
+}
+.addTask button{
+    margin-left: 10px;
+}
+
+/* excel_data */
+.card-containerExcel {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    margin-bottom: 20px;
+    z-index: 5;
+    padding: 20px;
+}
+
+.btnEXC {
+    display: inline-block;
+    background-color: #d71921;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 40%;
+}
+
+.btnEXC:hover {
+    background-color: #c7161e;
+}
+
+.dropdown{
+    width: 95%;
+    padding: 8px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
 }

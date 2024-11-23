@@ -71,7 +71,7 @@
 </div>
 
 <!-- Modal for Adding Volunteer -->
-<div id="addVolunteerModal" class="modal">
+<!-- <div id="addVolunteerModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeAddModal">&times;</span>
         <h1>Add New Volunteer</h1>
@@ -96,6 +96,57 @@
 
             <label for="student_id">Student ID:</label>
             <input type="text" id="student_id" name="student_id"><br>
+
+            <label for="award_id">Award ID:</label>
+            <input type="text" id="award_id" name="award_id"><br>
+
+            <label for="event_id">Event IDs:</label>
+            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br>
+
+            <label for="schedule">Schedule (Event ID, Start Date, End Date):</label>
+            <textarea id="schedule" name="schedule" placeholder="Example: Evn001, 2024-11-01, 2024-11-20"></textarea><br>
+
+            <input type="submit" value="Add Volunteer">
+        </form>
+    </div>
+</div> -->
+
+<!-- Modal for Adding Volunteer -->
+<div id="addVolunteerModal" class="modal add-volunteer-modal">
+    <div class="modal-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h1>Add New Volunteer</h1>
+        <form class="formV" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <div class="input-group">
+                <div class="input-inline">
+                    <label for="phone">Phone:</label>
+                    <input style="width: 90%;" type="text" id="phone" name="phone" required><br>
+                </div>
+                <div class="input-inline">
+                    <label for="volunteer_hours">Volunteer Hours:</label>
+                    <input style="width: 90%;" type="number" id="volunteer_hours" name="volunteer_hours" required><br>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-inline">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select><br>
+                </div>
+                <div class="input-inline">
+                    <label for="student_id">Student ID:</label>
+                    <input style="width: 90%;" type="text" id="student_id" name="student_id"><br>
+                </div>
+            </div>
 
             <label for="award_id">Award ID:</label>
             <input type="text" id="award_id" name="award_id"><br>
