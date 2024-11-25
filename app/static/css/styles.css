@@ -100,37 +100,77 @@ footer {
 
 /* dashboard */
 .container {
-    margin: 10px;
-    padding: 0 40px;
+    /* margin: 10px; */
+    padding: 0;
+    position: relative;
 }
 
 .topNav {
     display: flex;
-    justify-content: space-between;
-    z-index: 10;
-    position: relative;
+    justify-content: space-between; 
+    align-items: center; 
+    width: 100%; 
+    padding: 20px 20px; 
+    box-sizing: border-box; 
+    position: absolute; 
+    z-index: 2; 
+    color: white;
+}
+
+.topNav img {
+    max-height: 60px; 
+    width: auto; 
+}
+
+.topNav h1 {
+    font-size: 30px; 
+    margin: 0 10px; 
+    flex-grow: 1; 
+    text-align: center; 
+    white-space: nowrap; 
+}
+
+.topNav button {
+    font-size: 14pxrem; 
+    padding: 5px 10px; 
 }
 
 .btnL {
-    display: inline-block;
     background-color: #d71921;
     color: #fff;
-    text-align: center;
-    padding: 10px;
-    margin: 20px;
+    padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
-    height: 20px;
+    margin-left: auto;
 }
 
 .btnL:hover {
     background-color: #c7161e;
 }
 
+.dashboardImg-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.dashboardImg-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,rgba(0, 0, 0, 0.84) 3%, rgba(0, 0, 0, 0.1) 90%);
+    z-index: 1;
+}
+
 .dashboardImg {
     width: 100%;
     height: auto;
+    display: block;
 }
 
 /* Adjust card positioning */
@@ -202,6 +242,23 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .topNav h1 {
+        font-size: 1rem; 
+    }
+
+    .topNav img {
+        max-height: 30px; 
+    }
+
+    .topNav button {
+        font-size: 0.8rem; 
+    }
+
+    .btnL {
+        padding: 5px 10px; 
+        font-size: 12px;
+    }
+    
     .card-container {
         flex-direction: column;
         top: -50px;
@@ -210,6 +267,7 @@ footer {
     .card {
         width: 100%;
     }
+
 }
 
 /* manage volunteers events and awards */
@@ -490,22 +548,22 @@ button:hover {
 /* Styling the scrollbar */
 .modal-content::-webkit-scrollbar {
     width: 8px; /* Width of the scrollbar */
-    background: transparent; /* Make the background transparent */
+    background: transparent; 
 }
 
 .modal-content::-webkit-scrollbar-track {
-    background: transparent; /* Hide the track */
+    background: transparent; 
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-    background-color: #d71921; /* Red thumb */
-    border-radius: 50px; /* Make the thumb round */
-    border: 6px solid transparent; /* Border around the thumb for contrast */
+    background-color: #d71921; 
+    border-radius: 50px; 
+    border: 6px solid transparent; 
 }
 
 /* Hover effect for the scrollbar thumb */
 .modal-content::-webkit-scrollbar-thumb:hover {
-    background-color: #c7161e; /* Darker red when hovering */
+    background-color: #c7161e; 
 }
 
 

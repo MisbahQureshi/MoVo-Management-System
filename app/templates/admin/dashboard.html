@@ -2,13 +2,15 @@
 
 {% block content %}
 <div class="container">
-    <div class="topNav">
-        <h1>Admin Dashboard</h1>
-        <a href="{{ url_for('admin.login') }}" class="btnL">Logout</a>
-    </div>  
-    <div>
+    <div class="dashboardImg-container">
+        <div class="topNav">
+            <img src="/static/images/logow.png" alt="Logo" style="height: 40px; margin-left: auto;">
+            <h1>Admin Dashboard</h1>
+            <a href="{{ url_for('admin.login') }}" class="btnL">Logout</a>
+        </div>
         <img src="/static/images/dashboard.png" alt="volunteerServices" class="dashboardImg">
     </div>
+    
     <div class="card-container">
         <div class="card">
             <div class="card-header">
