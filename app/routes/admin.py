@@ -3,7 +3,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from app.utils.bcrypt_utils import generate_password_hash, check_password_hash
 from app.forms import LoginForm, SignupForm
-from app.utils.auth import login_required
+from app.utils.auth import login_required, set_session_timeout
 from app.extensions import mongo
 from bson import ObjectId
 from datetime import datetime
@@ -23,10 +23,22 @@ def login():
 
         if admin and check_password_hash(admin['password_hash'], password):
             session['admin_id'] = str(admin['_id'])
+            set_session_timeout()  # Set session timeout after successful login
             return redirect(url_for('admin.dashboard'))
         flash('Invalid credentials')
         
     return render_template('admin/login.html', form=form)
+
+# Admin logout route
+@admin_bp.route('/logout')
+@login_required
+def logout():
+    session.clear()  # Clear the session to log out
+    response = redirect(url_for('admin.login'))
+    response.set_cookie('session', value='', expires=0)
+    response.delete_cookie('session')  # Delete the session cookie from the client side
+    flash('You have been logged out.')
+    return response
 
 # Admin signup route
 @admin_bp.route('/signup', methods=['GET', 'POST'])
@@ -172,8 +184,12 @@ def excel_management():
         # Handle Excel import
         collection_name = request.form.get('collection_name')
         if collection_name:
-            ExcelHandler.import_from_excel(collection_name)
-    return render_template('admin/excel_management.html')  # The page where you'll manage the Excel data
+            result = ExcelHandler.import_from_excel(collection_name)
+            if result:
+                flash(f"Data successfully imported into {collection_name} collection.")
+            else:
+                flash("An error occurred while importing data.")
+    return render_template('admin/excel_management.html')
 
 # Export Excel route
 @admin_bp.route('/export_excel', methods=['GET'])
