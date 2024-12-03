@@ -6,7 +6,7 @@
         <h1>Task Management</h1>
         <a href="{{ url_for('admin.dashboard') }}" class="back-link" style="margin: auto 0;">Back to Dashboard</a>
     </div>
-    
+
     <p>Manage and view tasks.</p>
     <div class="addTask">
         <button type="button" id="openModal">Create Task</button>
@@ -42,7 +42,7 @@
     </table>
 </div>
 
-<!-- Modal for Adding Event -->
+<!-- Modal for Adding task -->
 <div id="addTaskModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeAddModal">&times;</span>
@@ -50,19 +50,35 @@
         <form action="{{ url_for('task.task_management') }}" method="POST">
             <label for="task_name">Task Name:</label>
             <input type="text" id="task_name" name="task_name" required><br>
-            
+
             <label for="task_description">Task Description:</label>
             <input type="text" id="task_description" name="task_description"><br>
-            
+
             <label for="task_date">Task Date:</label>
             <input type="date" id="task_date" name="task_date" required><br>
-            
-            <label for="task_event_id">Event ID:</label>
+
+            <!-- <label for="task_event_id">Event ID:</label>
             <input type="text" id="task_event_id" name="task_event_id"><br>
             
             <label for="task_volunteer_ids">Assign Volunteers (comma-separated):</label>
-            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br>
-            
+            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br> -->
+
+            <label for="task_event_id">Event:</label>
+            <select style="width: 99%;" id="task_event_id" name="task_event_id" required>
+                {% for event in events %}
+                <option value="{{ event.id }}">{{ event.name }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="task_volunteer_ids">Assign Volunteers:</label>
+            <div class="multi-select-dropdown">
+                <select style="height: 35px; width: 99%;" id="task_volunteer_ids" name="task_volunteer_ids" multiple>
+                    {% for volunteer in volunteers %}
+                    <option value="{{ volunteer.id }}">{{ volunteer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <input type="submit" value="Create Task">
         </form>
     </div>
@@ -75,15 +91,15 @@
 
     var closeAddModal = document.getElementById("closeAddModal");
 
-    openAddModalBtn.onclick = function() {
+    openAddModalBtn.onclick = function () {
         addTaskModal.style.display = "block";
     }
 
-    closeAddModal.onclick = function() {
+    closeAddModal.onclick = function () {
         addTaskModal.style.display = "none";
     }
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == addTaskModal) {
             addTaskModal.style.display = "none";
         }
