@@ -34,7 +34,10 @@
                 <td>{{ task.event_id }}</td>
                 <td>
                     <a href="{{ url_for('task.task_management', action='edit', task_id=task._id) }}">Edit</a> |
-                    <a href="{{ url_for('task.task_management', action='delete', task_id=task._id) }}">Delete</a>
+                    <form action="{{ url_for('task.task_management', action='delete', task_id=task._id) }}" method="POST"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
@@ -84,6 +87,18 @@
     </div>
 </div>
 
+<!-- Confirmation Modal -->
+<div id="confirmTaskModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Action</h2>
+        <p>Are you sure you want to delete this task?</p>
+        <div class="modal-actions">
+            <button id="confirmDeleteTask" class="btn btn-danger">Yes, Delete</button>
+            <button id="cancelDeleteTask" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script>
     var addTaskModal = document.getElementById("addTaskModal");
 
@@ -104,6 +119,44 @@
             addTaskModal.style.display = "none";
         }
     }
+    document.addEventListener("DOMContentLoaded", () => {
+    const deleteTaskLinks = document.querySelectorAll("a[href*='action=delete']");
+    const confirmTaskModal = document.getElementById("confirmTaskModal");
+    const confirmDeleteTaskButton = document.getElementById("confirmDeleteTask");
+    const cancelDeleteTaskButton = document.getElementById("cancelDeleteTask");
+
+    let currentTaskLink = null;
+
+    deleteTaskLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevent default navigation
+            currentTaskLink = link; // Save the link being clicked
+            confirmTaskModal.style.display = "block"; // Show the modal
+        });
+    });
+
+    // Handle confirm button click
+    confirmDeleteTaskButton.addEventListener("click", () => {
+        if (currentTaskLink) {
+            window.location.href = currentTaskLink.href; // Navigate to the saved link
+        }
+        confirmTaskModal.style.display = "none"; // Close the modal
+    });
+
+    // Handle cancel button click
+    cancelDeleteTaskButton.addEventListener("click", () => {
+        confirmTaskModal.style.display = "none"; // Close the modal
+        currentTaskLink = null; // Reset the saved link
+    });
+
+    // Close the modal on outside click
+    window.addEventListener("click", (e) => {
+        if (e.target === confirmTaskModal) {
+            confirmTaskModal.style.display = "none";
+            currentTaskLink = null;
+        }
+    });
+});
 </script>
 
 
