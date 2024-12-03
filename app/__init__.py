@@ -23,6 +23,6 @@ def create_app():
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(volunteer_bp, url_prefix='/volunteer')
     app.register_blueprint(event_bp, url_prefix='/event')
-    app.register_blueprint(task_bp, url_prefix='/admin')  # Register task blueprint under /admin
+    app.register_blueprint(task_bp, url_prefix='/admin')  
 
     return app
