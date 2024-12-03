@@ -112,8 +112,16 @@
             <label for="award_id">Award ID:</label>
             <input type="text" id="award_id" name="award_id"><br>
 
-            <label for="event_id">Event IDs:</label>
-            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br>
+            <!-- <label for="event_id">Event IDs:</label>
+            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br> -->
+            <label for="event_id">Event</label>
+            <div class="multi-select-dropdown">
+                <select style="height: 35px; width: 99%;" id="event_id" name="event_id" multiple>
+                    {% for event in events %}
+                    <option value="{{ event.id }}">{{ event.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
             <label for="schedule">Schedule (Event ID, Start Date, End Date):</label>
             <textarea id="schedule" name="schedule"
