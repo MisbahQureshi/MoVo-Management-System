@@ -9,10 +9,51 @@ task_bp = Blueprint('task', __name__)
 @task_bp.route('/tasks', methods=['GET', 'POST'])
 @login_required  # This decorator ensures only logged-in users can access this route
 def task_management():
-    # Fetch all tasks
-    tasks = mongo.db.tasks.find()
+    # Handling task creation
+    if request.method == 'POST':
+        task_name = request.form.get('task_name')
+        task_description = request.form.get('task_description')
+        task_date = request.form.get('task_date')
+        task_event_id = request.form.get('task_event_id')  # Event ID selected from dropdown
+        volunteer_ids = request.form.getlist('task_volunteer_ids')  # List of volunteer IDs selected
+
+        if not task_name or not task_date or not task_event_id:
+            flash("Task name, date, and associated event are required!", "error")
+            return redirect(url_for('task.task_management'))
+
+        try:
+            # Generate a new task ID based on the count of existing tasks
+            task_id = f"Task{mongo.db.tasks.count_documents({}) + 1:03d}"
+
+            # Insert the new task into the database
+            mongo.db.tasks.insert_one({
+                'task_id': task_id,
+                'name': task_name,
+                'description': task_description,
+                'date': task_date,
+                'event_id': task_event_id,
+                'volunteer_ids': volunteer_ids  # Assign selected volunteers
+            })
+            flash('Task created successfully!', "success")
+        except Exception as e:
+            flash(f"An error occurred while creating the task: {e}", "error")
+
+        return redirect(url_for('task.task_management'))
+
+    # Handling task deletion
+    if request.args.get('action') == 'delete':
+        task_id = request.args.get('task_id')
+        try:
+            mongo.db.tasks.delete_one({'task_id': task_id})  # Delete task by task_id
+            flash("Task deleted successfully!", "success")
+        except Exception as e:
+            flash(f"An error occurred while deleting the task: {e}", "error")
+
+        return redirect(url_for('task.task_management'))
+
+    # Fetch all tasks for display
+    tasks = list(mongo.db.tasks.find())
     tasks_list = []
-    
     for task in tasks:
         tasks_list.append({
             'task_id': task.get('task_id'),
@@ -20,47 +61,18 @@ def task_management():
             'description': task.get('description'),
             'date': task.get('date'),
             'volunteer_ids': task.get('volunteer_ids', []),  # List of volunteer IDs assigned
-            'event_id': task.get('event_id')
+            'event_id': task.get('event_id')  # Associated event ID
         })
-    
-    # Handling task creation
-    if request.method == 'POST':
-        task_name = request.form.get('task_name')
-        task_description = request.form.get('task_description')
-        task_date = request.form.get('task_date')
-        task_event_id = request.form.get('task_event_id')
-        volunteer_ids = request.form.getlist('task_volunteer_ids')  # List of volunteer IDs for this task
-        
-        if not task_name or not task_date:
-            flash("Task name and date are required!")
-            return redirect(url_for('task.task_management'))
-        
-        try:
-            # Create new task in the database
-            task_id = f"Task{str(mongo.db.tasks.count_documents({}) + 1)}"  # Generate task ID based on existing tasks count
-            mongo.db.tasks.insert_one({
-                'task_id': task_id,
-                'name': task_name,
-                'description': task_description,
-                'date': task_date,
-                'event_id': task_event_id,
-                'volunteer_ids': volunteer_ids  # Assign volunteers to the task
-            })
-            flash('Task created successfully!')
-        except Exception as e:
-            flash(f"An error occurred: {str(e)}")
-        
-        return redirect(url_for('task.task_management'))
 
-    # Handling task deletion
-    if request.args.get('action') == 'delete':
-        task_id = request.args.get('task_id')
-        try:
-            mongo.db.tasks.delete_one({'task_id': task_id})  # Delete by task_id
-            flash("Task deleted successfully!")
-        except Exception as e:
-            flash(f"An error occurred: {str(e)}")
-        
-        return redirect(url_for('task.task_management'))
+    # Fetch all events for the event dropdown
+    events = list(mongo.db.events.find())
 
-    return render_template('admin/task_management.html', tasks=tasks_list)
+    # Fetch all volunteers for the volunteers dropdown
+    volunteers = list(mongo.db.volunteers.find())
+
+    return render_template(
+        'admin/task_management.html',
+        tasks=tasks_list,
+        events=events,
+        volunteers=volunteers
+    )

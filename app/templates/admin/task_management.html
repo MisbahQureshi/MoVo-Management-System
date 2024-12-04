@@ -20,7 +20,7 @@
                 <th>Description</th>
                 <th>Date</th>
                 <th>Assigned Volunteers</th>
-                <th>Event ID</th>
+                <th>Event</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,12 +30,23 @@
                 <td>{{ task.name }}</td>
                 <td>{{ task.description }}</td>
                 <td>{{ task.date }}</td>
-                <td>{{ task.volunteer_ids | join(", ") }}</td>
-                <td>{{ task.event_id }}</td>
                 <td>
-                    <a href="{{ url_for('task.task_management', action='edit', task_id=task._id) }}">Edit</a> |
-                    <form action="{{ url_for('task.task_management', action='delete', task_id=task._id) }}" method="POST"
-                        style="display:inline;">
+                    {% if task.volunteer_ids %}
+                        {{ task.volunteer_ids | join(", ") }}
+                    {% else %}
+                        No volunteers assigned
+                    {% endif %}
+                </td>
+                <td>
+                    {% for event in events %}
+                        {% if event.event_id == task.event_id %}
+                            {{ event.name }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ url_for('task.task_management', action='edit', task_id=task.task_id) }}">Edit</a> |
+                    <form action="{{ url_for('task.task_management', action='delete', task_id=task.task_id) }}" method="POST" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
@@ -45,7 +56,7 @@
     </table>
 </div>
 
-<!-- Modal for Adding task -->
+<!-- Modal for Adding Task -->
 <div id="addTaskModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeAddModal">&times;</span>
@@ -55,32 +66,27 @@
             <input type="text" id="task_name" name="task_name" required><br>
 
             <label for="task_description">Task Description:</label>
-            <input type="text" id="task_description" name="task_description"><br>
+            <textarea id="task_description" name="task_description"></textarea><br>
 
             <label for="task_date">Task Date:</label>
             <input type="date" id="task_date" name="task_date" required><br>
 
-            <!-- <label for="task_event_id">Event ID:</label>
-            <input type="text" id="task_event_id" name="task_event_id"><br>
-            
-            <label for="task_volunteer_ids">Assign Volunteers (comma-separated):</label>
-            <input type="text" id="task_volunteer_ids" name="task_volunteer_ids"><br> -->
-
             <label for="task_event_id">Event:</label>
             <select style="width: 99%;" id="task_event_id" name="task_event_id" required>
+                <option value="" disabled selected>Select Event</option>
                 {% for event in events %}
-                <option value="{{ event.id }}">{{ event.name }}</option>
+                <option value="{{ event.event_id }}">{{ event.name }}</option>
                 {% endfor %}
             </select><br>
 
             <label for="task_volunteer_ids">Assign Volunteers:</label>
             <div class="multi-select-dropdown">
-                <select style="height: 35px; width: 99%;" id="task_volunteer_ids" name="task_volunteer_ids" multiple>
+                <select style="height: 100px; width: 99%;" id="task_volunteer_ids" name="task_volunteer_ids" multiple>
                     {% for volunteer in volunteers %}
-                    <option value="{{ volunteer.id }}">{{ volunteer.name }}</option>
+                    <option value="{{ volunteer.volunteer_id }}">{{ volunteer.name }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div><br>
 
             <input type="submit" value="Create Task">
         </form>
@@ -119,45 +125,45 @@
             addTaskModal.style.display = "none";
         }
     }
+
     document.addEventListener("DOMContentLoaded", () => {
-    const deleteTaskLinks = document.querySelectorAll("a[href*='action=delete']");
-    const confirmTaskModal = document.getElementById("confirmTaskModal");
-    const confirmDeleteTaskButton = document.getElementById("confirmDeleteTask");
-    const cancelDeleteTaskButton = document.getElementById("cancelDeleteTask");
+        const deleteTaskLinks = document.querySelectorAll("a[href*='action=delete']");
+        const confirmTaskModal = document.getElementById("confirmTaskModal");
+        const confirmDeleteTaskButton = document.getElementById("confirmDeleteTask");
+        const cancelDeleteTaskButton = document.getElementById("cancelDeleteTask");
 
-    let currentTaskLink = null;
+        let currentTaskLink = null;
 
-    deleteTaskLinks.forEach((link) => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault(); // Prevent default navigation
-            currentTaskLink = link; // Save the link being clicked
-            confirmTaskModal.style.display = "block"; // Show the modal
+        deleteTaskLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault(); // Prevent default navigation
+                currentTaskLink = link; // Save the link being clicked
+                confirmTaskModal.style.display = "block"; // Show the modal
+            });
+        });
+
+        // Handle confirm button click
+        confirmDeleteTaskButton.addEventListener("click", () => {
+            if (currentTaskLink) {
+                window.location.href = currentTaskLink.href; // Navigate to the saved link
+            }
+            confirmTaskModal.style.display = "none"; // Close the modal
+        });
+
+        // Handle cancel button click
+        cancelDeleteTaskButton.addEventListener("click", () => {
+            confirmTaskModal.style.display = "none"; // Close the modal
+            currentTaskLink = null; // Reset the saved link
+        });
+
+        // Close the modal on outside click
+        window.addEventListener("click", (e) => {
+            if (e.target === confirmTaskModal) {
+                confirmTaskModal.style.display = "none";
+                currentTaskLink = null;
+            }
         });
     });
-
-    // Handle confirm button click
-    confirmDeleteTaskButton.addEventListener("click", () => {
-        if (currentTaskLink) {
-            window.location.href = currentTaskLink.href; // Navigate to the saved link
-        }
-        confirmTaskModal.style.display = "none"; // Close the modal
-    });
-
-    // Handle cancel button click
-    cancelDeleteTaskButton.addEventListener("click", () => {
-        confirmTaskModal.style.display = "none"; // Close the modal
-        currentTaskLink = null; // Reset the saved link
-    });
-
-    // Close the modal on outside click
-    window.addEventListener("click", (e) => {
-        if (e.target === confirmTaskModal) {
-            confirmTaskModal.style.display = "none";
-            currentTaskLink = null;
-        }
-    });
-});
 </script>
-
 
 {% endblock %}
