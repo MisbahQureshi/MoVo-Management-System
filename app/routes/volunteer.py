@@ -1,55 +1,72 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.extensions import mongo
+from bson import ObjectId
 
 volunteer_bp = Blueprint('volunteer', __name__)
 
 # Volunteer registration route
-@volunteer_bp.route('/register', methods=['GET', 'POST'])
+@volunteer_bp.route('/register', methods=['POST'])
 def volunteer_registration():
     if request.method == 'POST':
-        # Collecting form data for volunteer registration
+        # Collect form data
         volunteer_data = {
-            'volunteer_id': request.form.get('volunteer_id'),  # Assuming a unique volunteer ID
-            'name': f"{request.form.get('first_name')} {request.form.get('last_name')}",
+            'volunteer_id': f"Vol{mongo.db.volunteers.count_documents({}) + 1:03d}",  # Auto-generate ID
+            'name': request.form.get('name'),
             'email': request.form.get('email'),
+            'phone': request.form.get('phone'),
+            'volunteer_hours': int(request.form.get('volunteer_hours', 0)),
+            'status': request.form.get('status', 'active'),
             'student_id': request.form.get('student_id'),
-            'contact_number': request.form.get('contact_number'),
-            'volunteer_hours': 0,  # Initially set to 0
-            'status': 'active',  # Default status is active
-            'event_id': [],  # List of event IDs the volunteer is associated with
-            'schedule': [],  # List of event schedules for the volunteer
-            'awards_id': [],  # Initially empty list for awards
+            'award_id': request.form.get('award_id', '').split(','),
+            'event_id': request.form.get('event_id', '').split(','),
+            'schedule': []
         }
 
+        # Parse and validate schedule field
+        schedule_data = request.form.get('schedule')
+        if schedule_data:
+            for entry in schedule_data.splitlines():
+                try:
+                    event_id, start_date, end_date = entry.split(',')
+                    volunteer_data['schedule'].append({
+                        'event_id': event_id.strip(),
+                        'start_date': start_date.strip(),
+                        'end_date': end_date.strip()
+                    })
+                except ValueError:
+                    flash(f"Invalid schedule format for entry: {entry}", 'error')
+
+        # Insert volunteer into database
         try:
             mongo.db.volunteers.insert_one(volunteer_data)
-            flash('Registration successful!')
-            return redirect(url_for('volunteer.volunteer_registration'))
+            flash('Volunteer added successfully!', 'success')
         except Exception as e:
-            flash(f'An error occurred while registering: {str(e)}')
+            flash(f"Error while adding volunteer: {e}", 'error')
 
-    return render_template('volunteer/registration.html')
+    return redirect(url_for('admin.volunteer_management'))
+
 
 # View all volunteers route
 @volunteer_bp.route('/view')
 def view_volunteers():
-    # Fetching all volunteer data from the database
+    # Fetch all volunteers from the database
     volunteers = mongo.db.volunteers.find()
 
-    # Prepare volunteers data with necessary fields
-    volunteers_list = []
-    for volunteer in volunteers:
-        volunteers_list.append({
+    # Prepare volunteers for rendering
+    volunteers_list = [
+        {
             'volunteer_id': volunteer.get('volunteer_id'),
             'name': volunteer.get('name'),
             'email': volunteer.get('email'),
             'volunteer_hours': volunteer.get('volunteer_hours'),
             'status': volunteer.get('status'),
             'student_id': volunteer.get('student_id'),
-            'contact_number': volunteer.get('contact_number'),
-            'event_ids': volunteer.get('event_id', []),  # Associated event IDs
-            'schedule': volunteer.get('schedule', []),  # Schedule for events
-            'awards_id': volunteer.get('awards_id', []),  # Awards associated with the volunteer
-        })
-    
+            'phone': volunteer.get('phone'),
+            'event_id': volunteer.get('event_id', []),
+            'awards_id': volunteer.get('awards_id', []),
+            'schedule': volunteer.get('schedule', [])
+        }
+        for volunteer in volunteers
+    ]
+
     return render_template('volunteer/view.html', volunteers=volunteers_list)

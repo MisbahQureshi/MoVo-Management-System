@@ -3,7 +3,7 @@
 {% block content %}
 <div class="editEvent-container">
     <h1>Edit Event</h1>
-    <form action="{{ url_for('admin.edit_event', event_id=event.id) }}" method="POST">
+    <form action="{{ url_for('admin.edit_event', event_id=event['_id']) }}" method="POST">
         <label for="name">Event Name:</label>
         <input type="text" id="name" name="name" value="{{ event.name }}" required><br>
 

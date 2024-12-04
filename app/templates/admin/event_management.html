@@ -46,9 +46,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="{{ url_for('admin.edit_event', event_id=event.id) }}">Edit</a> |
+                    <a href="{{ url_for('admin.edit_event', event_id=event['_id']) }}">Edit</a> |
                     <!-- Delete Event -->
-                    <form action="{{ url_for('admin.delete_event', event_id=event.id) }}" method="POST" style="display:inline;">
+                    <form action="{{ url_for('admin.delete_event', event_id=event['_id']) }}" method="POST" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
