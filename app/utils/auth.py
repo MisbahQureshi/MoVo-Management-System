@@ -6,8 +6,9 @@ from ..extensions import mongo
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'admin_id' not in session:
-            return redirect(url_for('admin.login'))
+        if 'admin_id' not in session and 'employee_id' not in session:
+            # Redirect based on session type
+            return redirect(url_for('admin.login') if 'admin_id' not in session else url_for('employee.login'))
 
         # Session timeout handling
         expires_at = session.get('expires_at')
@@ -18,7 +19,7 @@ def login_required(f):
             # Compare with utcnow (which is a naive datetime)
             if datetime.datetime.utcnow() > expires_at:
                 session.clear()
-                return redirect(url_for('admin.login'))
+                return redirect(url_for('admin.login') if 'admin_id' in session else url_for('employee.login'))
 
         return f(*args, **kwargs)
     return decorated_function

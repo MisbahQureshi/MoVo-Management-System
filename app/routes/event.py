@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from bson import ObjectId
 from app.extensions import mongo
 from app.models.event import Event
@@ -24,7 +24,10 @@ def generate_event_id():
         flash(f"Error generating event ID: {str(e)}")
         return None
 
-# Route: Create Event
+
+
+
+
 @event_bp.route('/create', methods=['GET', 'POST'])
 def create_event():
     if request.method == 'POST':
@@ -41,44 +44,52 @@ def create_event():
             flash('Event name, event date, start date, and end date are required.')
             return redirect(url_for('event.create_event'))
 
-        # Check if the user is logged in (either as admin or employee)
-        if 'admin_id' in session:
-            employee_id = 'admin'  # Admin user
-        elif 'employee_id' in session:
-            employee_id = session['employee_id']  # Employee ID from session
-        else:
-            flash('Please log in first!')
-            return redirect(url_for('admin.login'))
-
         # Generate a new event ID
         event_id = generate_event_id()
         if not event_id:
             flash("Failed to generate event ID. Please try again.")
             return redirect(url_for('event.create_event'))
 
-        # Create event data - Ensure it matches the correct format in the DB
+        # Create event data
         event_data = {
             'event_id': event_id,
             'name': name,
             'description': description,
-            'date': date,  # Store the event date separately
+            'date': date,
             'start_date': start_date,
             'end_date': end_date,
-            'volunteer_id': assigned_volunteers,  # Use 'volunteer_id' as per the correct structure
-            'employee_id': employee_id
+            'volunteer_ids': assigned_volunteers,
+            'employee_id': session.get('employee_id', 'admin')  # Default to admin if no session
         }
 
         try:
             mongo.db.events.insert_one(event_data)
             flash('Event created successfully!')
-            return redirect(url_for('admin.event_management'))  # Correct redirect to admin's event management
+            return redirect(url_for('admin.event_management'))
         except Exception as e:
             flash(f'Failed to create event. Error: {str(e)}')
             return redirect(url_for('event.create_event'))
 
-    # Retrieve all volunteers to display in the form
-    volunteers = list(Volunteer.find_all())
+    # Fetch all active volunteers for the dropdown
+    volunteers = list(mongo.db.volunteers.find({"status": "active"}, {"_id": 1, "name": 1}))
+    print(f"Debug: Fetched volunteers = {volunteers}")  # Debugging line
     return render_template('admin/create_event.html', volunteers=volunteers)
+
+
+
+
+
+# Route: Fetch Volunteers (for API and JavaScript calls)
+@event_bp.route('/volunteers', methods=['GET'])
+def get_volunteers():
+    try:
+        # Fetch all active volunteers from the database
+        volunteers = mongo.db.volunteers.find({"status": "active"}, {"_id": 1, "name": 1})
+        # Convert MongoDB cursor to a list of dictionaries
+        volunteer_list = [{"id": str(v["_id"]), "name": v["name"]} for v in volunteers]
+        return jsonify(volunteer_list)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Route: Assign Tasks to Volunteers
 @event_bp.route('/assign-tasks', methods=['GET', 'POST'])
@@ -117,7 +128,7 @@ def assign_tasks():
 
     # Retrieve events and volunteers for the dropdowns
     events = mongo.db.events.find()
-    volunteers = mongo.db.volunteers.find()
+    volunteers = mongo.db.volunteers.find({"status": "active"})
     return render_template('event/assign_tasks.html', events=events, volunteers=volunteers)
 
 # Route: Display Events (with all details)
@@ -136,7 +147,7 @@ def events():
                 'description': event.get('description'),
                 'start_date': event.get('start_date'),
                 'end_date': event.get('end_date'),
-                'volunteers': event.get('volunteer_id', []),  # Display volunteer IDs
+                'volunteers': event.get('volunteer_ids', []),  # Display volunteer IDs
                 'tasks': event.get('tasks', [])
             })
 
