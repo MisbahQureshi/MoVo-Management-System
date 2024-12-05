@@ -62,12 +62,12 @@ def signup():
             flash('Passwords do not match.')
             return redirect(url_for('admin.signup'))
 
-        existing_admin = mongo.db.admins.find_one({'username': username})
+        existing_admin = mongo.db.employee.find_one({'username': username})
         if existing_admin:
             flash('Username already exists.')
             return redirect(url_for('admin.signup'))
 
-        mongo.db.admins.insert_one({
+        mongo.db.employee.insert_one({
             'username': username,
             'password_hash': generate_password_hash(password)
         })
