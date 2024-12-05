@@ -88,6 +88,17 @@
     </div>
 </div>
 
+<div id="confirmEventModal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Action</h2>
+        <p>Are you sure you want to delete this event?</p>
+        <div class="modal-actions">
+            <button id="confirmDeleteEvent" class="btn btn-danger">Yes, Delete</button>
+            <button id="cancelDeleteEvent" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         // Fetch volunteers and populate dropdown
@@ -118,5 +129,39 @@
             }
         };
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const deleteEventForms = document.querySelectorAll("form[action*='delete_event']");
+    const confirmEventModal = document.getElementById("confirmEventModal");
+    const confirmDeleteEventButton = document.getElementById("confirmDeleteEvent");
+    const cancelDeleteEventButton = document.getElementById("cancelDeleteEvent");
+    let currentEventForm = null;
+    deleteEventForms.forEach((form) => {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent default form submission
+            currentEventForm = form; // Save the form being submitted
+            confirmEventModal.style.display = "block"; // Show the modal
+        });
+    });
+    // Handle confirm button click
+    confirmDeleteEventButton.addEventListener("click", () => {
+        if (currentEventForm) {
+            currentEventForm.submit(); // Submit the saved form
+        }
+        confirmEventModal.style.display = "none"; // Close the modal
+    });
+    // Handle cancel button click
+    cancelDeleteEventButton.addEventListener("click", () => {
+        confirmEventModal.style.display = "none"; // Close the modal
+        currentEventForm = null; // Reset the saved form
+    });
+    // Close the modal on outside click
+    window.addEventListener("click", (e) => {
+        if (e.target === confirmEventModal) {
+            confirmEventModal.style.display = "none";
+            currentEventForm = null;
+        }
+    });
+});
 </script>
 {% endblock %}
