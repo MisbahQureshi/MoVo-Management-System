@@ -20,7 +20,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Employee</th>
-                <th>Volunteers</th>
+                <!-- <th>Volunteers</th> -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -34,7 +34,7 @@
                 <td>{{ event.start_date }}</td>
                 <td>{{ event.end_date }}</td>
                 <td>{{ event.employee_id }}</td>
-                <td>
+                <!-- <td>
                     {% if event.volunteers %}
                         <ul>
                             {% for volunteer_id in event.volunteers %}
@@ -44,7 +44,7 @@
                     {% else %}
                         No volunteers assigned
                     {% endif %}
-                </td>
+                </td> -->
                 <td>
                     <a href="{{ url_for('admin.edit_event', event_id=event['_id']) }}">Edit</a> |
                     <form action="{{ url_for('admin.delete_event', event_id=event['_id']) }}" method="POST" style="display:inline;">
@@ -78,10 +78,10 @@
             <label for="description">Description:</label>
             <textarea id="description" name="description" required></textarea><br>
 
-            <label for="volunteers">Select Volunteers:</label>
+            <!-- <label for="volunteers">Select Volunteers:</label>
             <div class="multi-select-dropdown">
                 <select id="volunteers-dropdown" name="volunteers" multiple style="height: 100px; width: 99%;"></select>
-            </div>
+            </div> -->
 
             <input type="submit" value="Add Event">
         </form>

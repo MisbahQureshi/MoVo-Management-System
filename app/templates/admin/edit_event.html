@@ -16,17 +16,9 @@
         <label for="description">Description:</label>
         <textarea id="description" name="description" required>{{ event.description }}</textarea><br>
 
-        <label for="volunteers">Select Volunteers:</label>
-        <!-- <select id="volunteers" name="volunteers" multiple>
-            {% for volunteer in volunteers %}
-                <option value="{{ volunteer.volunteer_id }}" 
-                    {% if volunteer.volunteer_id in event.volunteers %} selected {% endif %}>
-                    {{ volunteer.first_name }} {{ volunteer.last_name }}
-                </option>
-            {% endfor %}
-        </select><br><br> -->
+        <!-- <label for="volunteers">Select Volunteers:</label> -->
 
-        <div class="multi-select-dropdown">
+        <!-- <div class="multi-select-dropdown">
             <select style="height: 100px; width: 31%;" id="volunteers" name="volunteers" multiple>
                 {% for volunteer in volunteers %}
                 <option value="{{ volunteer.volunteer_id }}"
@@ -35,7 +27,7 @@
                 </option>
                 {% endfor %}
             </select>
-        </div><br><br>
+        </div><br><br> -->
 
         <button type="submit">Update Event</button>
     </form>
