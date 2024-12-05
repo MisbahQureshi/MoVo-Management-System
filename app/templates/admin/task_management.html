@@ -45,8 +45,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="{{ url_for('task.edit_task', task_id=task['task.task_id']) }}">Edit</a> |
-                    <form action="{{ url_for('task.delete_task', task_id=task['task.task_id']) }}" method="POST" style="display:inline;">
+                    <a href="{{ url_for('task.edit_task', task_id=task.task_id) }}">Edit</a> |
+                    <form action="{{ url_for('task.delete_task', task_id=task.task_id) }}" method="POST" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>

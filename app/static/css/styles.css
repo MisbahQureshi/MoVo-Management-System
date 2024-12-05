@@ -423,7 +423,10 @@ button:hover {
 
 .edit-container input[type="text"],
 .edit-container input[type="email"],
-.edit-container input[type="number"] {
+.edit-container input[type="number"],
+.edit-container input[type="date"],
+.edit-container select,
+.edit-container TextArea{
     width: 30%;
     padding: 8px;
     margin-bottom: 15px;

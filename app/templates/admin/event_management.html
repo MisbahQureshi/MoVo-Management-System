@@ -80,12 +80,18 @@
             <textarea id="description" name="description" required></textarea><br>
 
             <label for="volunteers">Select Volunteers:</label>
-            <select id="volunteers" name="volunteers" multiple>
+            <!-- <select id="volunteers" name="volunteers" multiple>
                 {% for volunteer in volunteers %}
                     <option value="{{ volunteer.volunteer_id }}">{{ volunteer.volunteer_id }}</option>
                 {% endfor %}
-            </select><br><br>
-
+            </select><br><br> -->
+            <div class="multi-select-dropdown">
+                <select style="height: 100px; width: 99%;" id="volunteers" name="volunteers" multiple>
+                    {% for volunteer in volunteers %}
+                    <option value="{{ volunteer.volunteer_id }}">{{ volunteer.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <input type="submit" value="Add Event">
         </form>
     </div>
