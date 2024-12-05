@@ -25,8 +25,16 @@ def login():
             session['admin_id'] = str(admin['_id'])
             set_session_timeout()  # Set session timeout after successful login
             return redirect(url_for('admin.dashboard'))
+
+              # Check if user is an employee
+        employee = mongo.db.employee.find_one({'username': username})
+
+        if employee and check_password_hash(employee['password_hash'], password):
+            session['employee_id'] = str(employee['_id'])
+            set_session_timeout()
+            return redirect(url_for('admin.dashboard'))
         flash('Invalid credentials')
-        
+
     return render_template('admin/login.html', form=form)
 
 # Admin logout route
