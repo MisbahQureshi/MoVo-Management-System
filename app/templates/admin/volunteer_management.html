@@ -89,13 +89,32 @@
                     <label for="phone">Phone:</label>
                     <input style="width: 90%;" type="text" id="phone" name="phone" required><br>
                 </div>
+
                 <div class="input-inline">
-                    <label for="volunteer_hours">Volunteer Hours:</label>
-                    <input style="width: 90%;" type="number" id="volunteer_hours" name="volunteer_hours" required><br>
+                    <label for="student_id">Student ID:</label>
+                    <input style="width: 90%;" type="text" id="student_id" name="student_id"><br>
                 </div>
             </div>
 
             <div class="input-group">
+                <div class="input-inline">
+                    <label for="time_in">Time In:</label>
+                    <input style="width: 90%;" type="time" id="time_in" name="time_in" required><br>
+                </div>
+
+                <div class="input-inline">
+                    <label for="time_out">Time Out:</label>
+                    <input style="width: 90%;" type="time" id="time_out" name="time_out" required><br>
+                </div>
+            </div>
+
+            <div class="input-group">
+
+                <div class="input-inline">
+                    <label for="volunteer_hours">Volunteer Hours:</label>
+                    <input style="width: 90%;" type="number" id="volunteer_hours" name="volunteer_hours" readonly required><br>
+                </div>
+                
                 <div class="input-inline">
                     <label for="status">Status:</label>
                     <select id="status" name="status">
@@ -103,25 +122,21 @@
                         <option value="inactive">Inactive</option>
                     </select><br>
                 </div>
-                <div class="input-inline">
-                    <label for="student_id">Student ID:</label>
-                    <input style="width: 90%;" type="text" id="student_id" name="student_id"><br>
-                </div>
             </div>
 
             <label for="award_id">Award ID:</label>
             <input type="text" id="award_id" name="award_id"><br>
 
-            <!-- <label for="event_id">Event IDs:</label>
-            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br> -->
-            <label for="event_id">Event</label>
+            <label for="event_id">Event IDs:</label>
+            <input type="text" id="event_id" name="event_id" placeholder="Comma-separated list of event IDs"><br>
+            <!-- <label for="event_id">Event</label>
             <div class="multi-select-dropdown">
                 <select style="height: 35px; width: 99%;" id="event_id" name="event_id" multiple>
                     {% for event in events %}
                     <option value="{{ event.id }}">{{ event.name }}</option>
                     {% endfor %}
                 </select>
-            </div>
+            </div> -->
 
             <label for="schedule">Schedule (Event ID, Start Date, End Date):</label>
             <textarea id="schedule" name="schedule"
@@ -191,6 +206,39 @@
             importModal.style.display = "none";
         }
     }
+
+    //time in time out
+    const timeInInput = document.getElementById("time_in");
+    const timeOutInput = document.getElementById("time_out");
+    const volunteerHoursInput = document.getElementById("volunteer_hours");
+
+    function calculateVolunteerHours() {
+        const timeIn = timeInInput.value;
+        const timeOut = timeOutInput.value;
+
+        if (timeIn && timeOut) {
+            const [inHours, inMinutes] = timeIn.split(":").map(Number);
+            const [outHours, outMinutes] = timeOut.split(":").map(Number);
+
+            const startTime = new Date();
+            const endTime = new Date();
+
+            startTime.setHours(inHours, inMinutes);
+            endTime.setHours(outHours, outMinutes);
+
+            const diff = (endTime - startTime) / (1000 * 60 * 60); // Convert milliseconds to hours
+
+            // volunteerHoursInput.value = diff > 0 ? diff.toFixed(2) : 0;
+            // Round off to the nearest whole number
+            volunteerHoursInput.value = diff > 0 ? Math.round(diff) : 0;
+        } else {
+            volunteerHoursInput.value = 0;
+        }
+    }
+
+    timeInInput.addEventListener("change", calculateVolunteerHours);
+    timeOutInput.addEventListener("change", calculateVolunteerHours);
+    //delete
 
     document.addEventListener("DOMContentLoaded", () => {
         const deleteForms = document.querySelectorAll("form[action*='delete_volunteer']");

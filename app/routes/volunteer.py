@@ -9,6 +9,30 @@ volunteer_bp = Blueprint('volunteer', __name__)
 def volunteer_registration():
     if request.method == 'POST':
         # Collect form data
+        time_in = request.form.get('time_in')
+        time_out = request.form.get('time_out')
+
+        # Calculate volunteer hours
+        if time_in and time_out:
+            try:
+                from datetime import datetime
+
+                time_in_dt = datetime.strptime(time_in, "%H:%M")
+                time_out_dt = datetime.strptime(time_out, "%H:%M")
+                time_diff = (time_out_dt - time_in_dt).total_seconds() / 3600  # Convert seconds to hours
+
+                if time_diff <= 0:
+                    flash("Time Out must be later than Time In", 'error')
+                    return redirect(url_for('volunteer.volunteer_registration'))
+
+                volunteer_hours = round(time_diff, 2)
+            except Exception as e:
+                flash(f"Error calculating volunteer hours: {e}", 'error')
+                return redirect(url_for('volunteer.volunteer_registration'))
+        else:
+            flash("Both Time In and Time Out are required", 'error')
+            return redirect(url_for('volunteer.volunteer_registration'))
+
         volunteer_data = {
             'volunteer_id': f"Vol{mongo.db.volunteers.count_documents({}) + 1:03d}",  # Auto-generate ID
             'name': request.form.get('name'),

@@ -509,6 +509,7 @@ button:hover {
 .modal-content input[type="number"],
 .modal-content input[type="date"],
 .modal-content input[type="file"],
+.modal-content input[type="time"],
 .modal-content select {
     width: 95%;
     padding: 8px;
