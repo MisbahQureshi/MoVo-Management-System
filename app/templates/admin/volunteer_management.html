@@ -10,7 +10,7 @@
     <p>Manage and view the list of volunteers.</p>
     <div class="addVolunteers">
         <button type="button" id="openModal">Add New Volunteer</button>
-        <button type="button" id="openImportModal">Import Document</button>
+        <!-- <button type="button" id="openImportModal">Import Document</button> -->
     </div>
 
     <table style="font-size: 12px; width: 100%; border-collapse: collapse;">
@@ -148,17 +148,17 @@
 </div>
 
 <!-- Modal for Importing Document -->
-<div id="importModal" class="modal">
+<!-- <div id="importModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closeImportModal">&times;</span>
         <h1>Import Document</h1>
-        <form method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('admin.import_excel') }}" method="POST" enctype="multipart/form-data">
             <label for="file">Choose File:</label>
             <input type="file" id="file" name="file" accept=".xlsx, .xls" required><br>
             <input type="submit" value="Upload File">
         </form>
     </div>
-</div>
+</div> -->
 
 <!-- Confirmation Modal -->
 <div id="confirmModal" class="modal">
@@ -177,26 +177,26 @@
     var importModal = document.getElementById("importModal");
 
     var openAddModalBtn = document.getElementById("openModal");
-    var openImportModalBtn = document.getElementById("openImportModal");
+    // var openImportModalBtn = document.getElementById("openImportModal");
 
     var closeAddModal = document.getElementById("closeAddModal");
-    var closeImportModal = document.getElementById("closeImportModal");
+    //var closeImportModal = document.getElementById("closeImportModal");
 
     openAddModalBtn.onclick = function () {
         addVolunteerModal.style.display = "block";
     }
 
-    openImportModalBtn.onclick = function () {
-        importModal.style.display = "block";
-    }
+    // openImportModalBtn.onclick = function () {
+    //     importModal.style.display = "block";
+    // }
 
     closeAddModal.onclick = function () {
         addVolunteerModal.style.display = "none";
     }
 
-    closeImportModal.onclick = function () {
-        importModal.style.display = "none";
-    }
+    // closeImportModal.onclick = function () {
+    //     importModal.style.display = "none";
+    // }
 
     window.onclick = function (event) {
         if (event.target == addVolunteerModal) {
