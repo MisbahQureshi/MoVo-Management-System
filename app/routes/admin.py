@@ -236,9 +236,6 @@ def import_excel():
 
 @admin_bp.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
-    return render_template('admin/forgot_password.html')
-
-def forgot_password():
     if request.method == 'POST':
         username = request.form.get('username')
         new_password = request.form.get('new_password')
@@ -250,13 +247,16 @@ def forgot_password():
         # Check if the passwords match
         if new_password != confirm_new_password:
             flash('Passwords do not match.')
+            print("Passwords do not match.")
             return redirect(url_for('admin.forgot_password'))
 
         # Check if the username exists in the database
         employee = mongo.db.employee.find_one({'username': username})
         print(f"Employee Found: {employee}")  # Log the result
+
         if not employee:
             flash('Username not found.')
+            print("Username not found in the database.")
             return redirect(url_for('admin.forgot_password'))
 
         # Hash the new password
@@ -267,10 +267,10 @@ def forgot_password():
             {'username': username},
             {'$set': {'password_hash': new_password_hash}}
         )
+        print("Password updated successfully in the database.")
 
         flash('Password reset successful! Please log in.')
         return redirect(url_for('admin.login'))
 
     # For GET requests, render the forgot password form
     return render_template('admin/forgot_password.html')
-
