@@ -15,13 +15,12 @@
             <!-- {{ form.password.label(class="form-label") }} -->
             {{ form.password(class="form-input", placeholder="Password") }}
         </div>
-        <div>
-            <a href="/admin/forgot-password">Forgot Password?</a>
-        </div>
+       
         <div>
             {{ form.submit(class="form-submit") }}
         </div>
     </form>
+    <p>Forgot Password? <a href="/admin/forgot-password">Click Here</a></p>
     <p>Don't have an account? <a href="{{ url_for('admin.signup') }}">Sign up here</a></p>
 </div>
 </div>

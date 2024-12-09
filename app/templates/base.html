@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    {% if request.endpoint not in ['admin.login', 'admin.signup', 'admin.dashboard','admin.volunteer_management','admin.event_management', 'task.task_management', 'admin.award_management','admin.edit_volunteer', 'admin.edit_event', 'admin.excel_management', 'task.edit_task'] %}
+    {% if request.endpoint not in ['admin.login', 'admin.signup', 'admin.dashboard','admin.volunteer_management','admin.event_management', 'task.task_management', 'admin.award_management','admin.edit_volunteer', 'admin.edit_event', 'admin.excel_management', 'task.edit_task', 'admin.forgot_password'] %}
     <header>
         <nav>
             <ul>
