@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The MOVO (Management of Volunteers Online) system is a web-based application designed to streamline the recruitment, management, and tracking of student volunteers for campus events. Built using Flask, a Python web framework, and MongoDB, a flexible NoSQL database, the system's main goal is to help administrators efficiently manage volunteer sign-ups, select participants, assign tasks, and track hours worked. The system prioritizes students with fewer or no volunteer hours, promoting fairness and equal opportunities.
+The MOVO (Management of Volunteers Online) system is a web-based application designed to streamline the recruitment, management, and tracking of student volunteers for campus events. Built using Flask, a Python web framework, and MongoDB, a flexible NoSQL database, the system's main goal is to help administrators efficiently manage volunteer sign-ups, select participants, assign tasks, and track hours worked.
 
 ## Modules and Features
 
@@ -42,13 +42,12 @@ The MOVO (Management of Volunteers Online) system is a web-based application des
 ## System Flow
 
 1. Admin Login
-2. Form Generation/Attachment
-3. Data Import
-4. Volunteer Registration
-5. Volunteer Selection
-6. Task Assignment
-7. Hour Tracking
-8. Award Management
+2. Data Import
+3. Volunteer Registration
+4. Volunteer Selection
+5. Task Assignment
+6. Hour Tracking
+7. Award Management
 
 
 ## Contributing
